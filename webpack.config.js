@@ -18,6 +18,18 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: "style!css!less"
+            },
+            {
+                test: /\.html$/,
+                loader: "html"
+            },
+            {
+                test: /\.vue$/,
+                loader: "vue"
+            },
+            {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader?limit=8192'
             }
         ]
     },
