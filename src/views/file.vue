@@ -45,7 +45,10 @@
                 left:item.x*option.cell.width +'px'
              }">
             <div class="file-body"
-                @click="select(item)">
+                 @click="select(item)"
+                 @dragstart="dragstart($event,item)"
+                 draggable="true"
+            >
                 <div class="icon">
 
                 </div>
@@ -67,10 +70,20 @@
     var h = $(window).height();
     var maxRow = Math.floor(h/option.cell.height);
 
+    function getParsedXY(x,y){
+        x=x-option.cell.width/2;
+        y=y-option.cell.height/2;
+        return {
+            x:Math.round(x/option.cell.width),
+            y:Math.round(y/option.cell.height)
+        };
+    }
+
     module.exports = {
         data: function () {
             return {
                 option:option,
+                draggingItem:null,
                 files:require('data/files.js').map(function (item,index) {
                     var x = Math.floor(index/maxRow);
                     var y = index%maxRow;
@@ -87,15 +100,24 @@
                     a.selected = false;
                 })
                 item.selected = !item.selected;
+            },
+            dragstart:function (e,item) {
+                this.draggingItem = item;
             }
         },
         components: {},
         ready: function () {
             var vm = this;
-            $event.on('click:wallpaper',function (data) {
+            $event.on('click:wallpaper',function (e,data) {
                 vm.files.map(function (a) {
                     a.selected = false;
                 })
+            });
+            $event.on('drop:wallpaper',function (e,data) {
+                var targetPosition = getParsedXY(data.x,data.y);
+                vm.draggingItem.x = targetPosition.x;
+                vm.draggingItem.y = targetPosition.y;
+                vm.draggingItem = null;
             })
         }
     }
