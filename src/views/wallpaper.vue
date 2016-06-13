@@ -1,5 +1,5 @@
 <style lang="less" rel="stylesheet/less">
-    .wallpaper{
+    .wallpaper-section{
         height:100%;
         background:url(../images/wall.jpg);
         background-size:cover;
@@ -7,7 +7,7 @@
 </style>
 <template>
     <div
-            class="wallpaper"
+            class="wallpaper-section"
             @click="emit('click:wallpaper',$event);"
             @drop="drop($event);"
             @dragover="dragover($event)"

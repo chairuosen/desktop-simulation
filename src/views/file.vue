@@ -1,7 +1,4 @@
 <style lang="less" rel="stylesheet/less">
-    .file-container{
-
-    }
     .file-item {
         position:absolute;
         /*border:1px dashed #fff;*/
@@ -36,7 +33,7 @@
     }
 </style>
 <template>
-    <div class="file-container">
+    <div class="file-section">
         <div class="file-item" v-for="item in files"
              :class="{selected:item.selected}"
              :style="{

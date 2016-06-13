@@ -28,6 +28,7 @@
         <wallpaper class="scope"></wallpaper>
         <file class="scope"></file>
         <action class="scope"></action>
+        <application class="scope"></application>
     </div>
 </template>
 
@@ -41,7 +42,8 @@
         components:{
             wallpaper:require('views/wallpaper.vue'),
             file:require('views/file.vue'),
-            action:require('views/action.vue')
+            action:require('views/action.vue'),
+            application:require('views/application.vue')
         },
         ready:function () {
 
