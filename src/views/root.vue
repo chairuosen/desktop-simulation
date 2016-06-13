@@ -28,26 +28,52 @@
         <wallpaper class="scope"></wallpaper>
         <file class="scope"></file>
         <action class="scope"></action>
-        <application class="scope"></application>
+        <application class="scope" :apps.sync="apps"></application>
+        <taskbar class="scope" :apps.sync="apps"></taskbar>
     </div>
 </template>
 
 <script>
+    var App = require('service/app').App;
+    var apps = [
+        new App({
+            title:"Safari",
+            type:'browser',
+        }),
+        new App({
+            title:"Chrome",
+            type:'browser',
+        }),
+        new App({
+            title:"Firefox",
+            type:'browser',
+        })
+    ];
+
     require('service/keyboard').init();
     require('service/global-var');
     module.exports = {
         el:function () {
             return "body";
         },
+        data:function () {
+            return {
+                apps:apps
+            }
+        },
         replace: false,
         components:{
             wallpaper:require('views/wallpaper.vue'),
             file:require('views/file.vue'),
             action:require('views/action.vue'),
-            application:require('views/application.vue')
+            application:require('views/application.vue'),
+            taskbar:require('views/taskbar.vue')
         },
         ready:function () {
-
+            var vm = this;
+            vm.$on('switchApp',function (data) {
+                vm.$broadcast('switchApp',data);
+            })
         }
     };
 </script>

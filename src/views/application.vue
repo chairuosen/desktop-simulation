@@ -5,14 +5,89 @@
         border-radius:5px;
         overflow:hidden;
         box-shadow:0 5px 35px rgba(0, 0, 0, 0.4);
+        @titleHeight:30px;
         .app-title{
+            position:relative;
             background:#ddd;
             text-align:center;
-            line-height:30px;
+            line-height:@titleHeight;
+            height:@titleHeight;
             cursor: default;
         }
         .app-body{
 
+        }
+        .app-control{
+            @margin:5px;
+            position:absolute;
+            right:0;
+            top:0;
+            height:@titleHeight;
+            .icon{
+                display:block;
+                position:relative;
+                width:@titleHeight - 2*@margin;
+                height:@titleHeight - 2*@margin;
+                margin:@margin @margin 0 0;
+                float:left;
+            }
+            .c1{
+                background:#81C2D0;
+                &:before{
+                    box-sizing:border-box;
+                    @w:12px;
+                    @h:2px;
+                    content:"";
+                    display:block;
+                    position:absolute;
+                    height:@h;
+                    width:@w;
+                    left:  ( @titleHeight - 2*@margin - @w ) /2;
+                    top: ( ( @titleHeight - 2*@margin - @h ) /2 ) - 4px;
+                    background:#fff;
+                }
+            }
+            .c2{
+                background:#659A65;
+                &:before{
+                    box-sizing:border-box;
+                    @w:12px;
+                    @b:1px;
+                    content:"";
+                    display:block;
+                    position:absolute;
+                    height:@w;
+                    width:@w;
+                    left:  ( @titleHeight - 2*@margin - @w ) /2;
+                    top: ( @titleHeight - 2*@margin - @w ) /2;
+                    border:@b solid #fff;
+                    border-top-width:2*@b;
+                }
+            }
+            .Rotate(@deg){
+                transform:rotate(@deg);
+                -webkit-transform:rotate(@deg);
+                -moz-transform:rotate(@deg);
+            }
+            .c3{
+                &:before,&:after{
+                    @w:14px;
+                    @h:2px;
+                    content:"";
+                    display:block;
+                    position:absolute;
+                    height:@h;
+                    width:@w;
+                    left:  ( @titleHeight - 2*@margin - @w ) /2;
+                    top: ( @titleHeight - 2*@margin - @h ) /2;
+                    background:#fff;
+                    .Rotate(45deg);
+                }
+                &:after{
+                    .Rotate(-45deg);
+                }
+                background:#D26262;
+            }
         }
         @reactionWidth:4px;
         .resize-handle{
@@ -42,19 +117,26 @@
         <div
                 v-for="app in apps"
                 class="app"
+                v-show="app.show"
                 :style="{
                 top:app.top+'px',
                 left:app.left+'px',
                 width:app.width+'px',
                 height:app.height+'px'
                 }"
+                @mousedown="appWindowMousedown(app)"
         >
             <header
                     class="app-title"
-                    @mousedown="titleMousedown(app,$event)"
+                    @mousedown.self="titleMousedown(app,$event)"
                     @mouseup="mouseup()"
             >
                 {{app.title}}
+                <div class="app-control">
+                    <span class="icon c1" @mousedown="hideApp(app)"></span>
+                    <span class="icon c2" @mousedown="maxApp(app)"></span>
+                    <span class="icon c3" @mousedown="closeApp(app)"></span>
+                </div>
             </header>
             <div class="app-body">
                 <component  :is="app.type"></component>
@@ -79,26 +161,11 @@
     var appWindowMinWidth = 400;
     var appWindowMinHeight = 200;
     module.exports = {
+        props:{
+            apps:true
+        },
         data: function () {
             return {
-                apps:[
-                    {
-                        title:"Safari",
-                        type:'browser',
-                        top:200,
-                        left:200,
-                        height:400,
-                        width:400
-                    },
-                    {
-                        title:"Safari",
-                        type:'browser',
-                        top:200,
-                        left:200,
-                        height:400,
-                        width:400
-                    }
-                ],
                 current:{
                     app:null,
                     drag:false,
@@ -114,13 +181,17 @@
             switchApp:function (app) {
                 this.current.app = app;
                 var otherApps = this.apps.filter(function (a) {
+                    a.actived = false;
                     return a!==app;
                 });
+                app.actived = true;
                 otherApps.push(app);
                 this.apps = otherApps;
             },
-            titleMousedown:function (app,e) {
+            appWindowMousedown:function (app) {
                 this.switchApp(app);
+            },
+            titleMousedown:function (app,e) {
                 this.current.drag = {x:e.clientX-app.left,y:e.clientY-app.top};
             },
             mouseup:function () {
@@ -143,6 +214,21 @@
                     dy:e.clientY-app.top-app.height,
                     dx:e.clientX-app.left-app.width
                 }
+            },
+            closeApp:function (app) {
+                this.apps = this.apps.filter(function (a) {
+                    return a !== app;
+                });
+            },
+            maxApp:function (app) {
+                app.top = 0;
+                app.left = 0;
+                app.height = window._h;
+                app.width = window._w;
+            },
+            hideApp:function (app) {
+                app.show = false;
+                app.actived = false;
             }
         },
         components: {
@@ -152,6 +238,17 @@
             var vm = this;
             var $w = $(window);
             var outside = false;
+
+            if( vm.apps && vm.apps.length ){
+                vm.apps.sort(function (a,b) {
+                    return a.sortKey > b.sortKey ? 1 : a.sortKey < b.sortKey ? -1 : 0;
+                });
+                vm.switchApp(vm.apps[0]);
+            }
+            vm.$on('switchApp',function (data) {
+                vm.switchApp(data);
+            })
+
             $w.on('mousemove',function (e) {
                 var app = vm.current.app;
 

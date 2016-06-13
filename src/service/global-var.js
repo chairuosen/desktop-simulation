@@ -1,7 +1,7 @@
 var $w = $(window);
-window._h = $w.height();
-window._w = $w.width();
-$w.on('resize',function () {
-    window._h = $w.height();
+$w.on('resize',update);
+update();
+function update(){
+    window._h = $w.height()-40; // taskbar
     window._w = $w.width();
-})
+}
