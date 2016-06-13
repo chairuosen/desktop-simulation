@@ -74,15 +74,18 @@
     var h = $(window).height();
     var maxRow = Math.floor(h/option.cell.height);
 
-    function getParsedXY(x,y,halfRelative){
-        if(halfRelative!==false){
-            x=x-option.cell.width/2;
-            y=y-option.cell.height/2;
-        }
-        return {
-            x:Math.round(x/option.cell.width),
-            y:Math.round(y/option.cell.height)
+    function getParsedXY(x,y,origin){
+        x=x-option.cell.width/2;
+        y=y-option.cell.height/2;
+        var o = {
+            x:x/option.cell.width,
+            y:y/option.cell.height
         };
+        if(!origin){
+            o.x = Math.round(o.x);
+            o.y = Math.round(o.y);
+        }
+        return o;
     }
 
     var util = require('service/util');
@@ -235,8 +238,8 @@
             });
             
             $event.on('selection:mouse-action',function (e,data) {
-                var a = getParsedXY(data.topLeft.x,data.topLeft.y,false);
-                var b = getParsedXY(data.bottomRight.x,data.bottomRight.y,false);
+                var a = getParsedXY(data.topLeft.x,data.topLeft.y,true);
+                var b = getParsedXY(data.bottomRight.x,data.bottomRight.y,true);
                 var yRange = [a.y,b.y];
                 var xRange = [a.x,b.x];
                 vm.files.forEach(function (item) {

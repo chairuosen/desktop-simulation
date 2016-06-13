@@ -107,7 +107,6 @@
 //                console.log('desktop menu');
                 vm.menu.data = menuData.wallpaper;
                 vm.menu.position = data;
-                console.log(1);
             });
             $event.on('mousedown:wallpaper',function (e,data) {
                 vm.menu.data = null;
