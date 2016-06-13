@@ -48,7 +48,7 @@
         {
             text:"删除",
             type:"delete",
-            disabled:true,
+            disabled:false,
             callback:function () {
                 $event.emit('delete:menu')
             }

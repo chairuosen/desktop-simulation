@@ -206,6 +206,11 @@
                 vm.files = vm.files.filter(function (a) {
                     return !a.deleted;
                 });
+            });
+            $event.on('delete:menu delete:keyboard',function () {
+                vm.files = vm.files.filter(function (a) {
+                    return !a.selected;
+                })
             })
             $event.on('paste:keyboard paste:menu',function () {
                 var arr = vm.clipboard;
