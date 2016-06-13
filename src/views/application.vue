@@ -124,6 +124,7 @@
                 width:app.width+'px',
                 height:app.height+'px'
                 }"
+
                 @mousedown="appWindowMousedown(app)"
         >
             <header
