@@ -34,6 +34,7 @@
 
 <script>
     require('service/keyboard').init();
+    require('service/global-var');
     module.exports = {
         el:function () {
             return "body";
