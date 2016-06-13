@@ -31,6 +31,7 @@
 </template>
 
 <script>
+    require('service/keyboard').init();
     module.exports = {
         el:function () {
             return "body";
@@ -42,6 +43,7 @@
             action:require('views/action.vue')
         },
         ready:function () {
+
         }
     };
 </script>

@@ -79,10 +79,15 @@
         };
     }
 
+    function clone(a) {
+        return JSON.parse(JSON.stringify(a));
+    }
+
     module.exports = {
         data: function () {
             return {
                 option:option,
+                clipboard:[],
                 draggingItem:null,
                 files:require('data/files.js').map(function (item,index) {
                     var x = Math.floor(index/maxRow);
@@ -103,21 +108,92 @@
             },
             dragstart:function (e,item) {
                 this.draggingItem = item;
+            },
+            getGridMap:function () {
+                var map = [];
+                this.files.forEach(function (item) {
+                    map[item.x] = map[item.x] || [];
+                    map[item.x][item.y] = item ;
+                });
+                return map;
+            },
+            clearSelect:function () {
+                this.files.map(function (a) {
+                    a.selected = false;
+                })
+            },
+            forEachGridEmptyPoint:function (cb) {
+                var map = this.getGridMap();
+                var x,y;
+                var count = 0;
+                for(x=0,y=0;x<50;y++){
+                    if(y>maxRow-1){
+                        y=0;
+                        x++;
+                    }
+                    if(!map[x] || !map[x][y]){
+
+                        if(cb && cb(x,y,count)===false){
+                            return;
+                        }
+                        count++;
+                    }
+                }
             }
         },
         components: {},
         ready: function () {
             var vm = this;
             $event.on('click:wallpaper',function (e,data) {
-                vm.files.map(function (a) {
-                    a.selected = false;
-                })
+                vm.clearSelect();
             });
             $event.on('drop:wallpaper',function (e,data) {
                 var targetPosition = getParsedXY(data.x,data.y);
                 vm.draggingItem.x = targetPosition.x;
                 vm.draggingItem.y = targetPosition.y;
                 vm.draggingItem = null;
+            });
+            $event.on('copy:keyboard',function () {
+                vm.clipboard = vm.files.filter(function (a) {
+                    return a.selected;
+                }).map(function (a) {
+                    var b = clone(a)
+                    b.copy = true;
+                    return b;
+                });
+            });
+            $event.on('cut:keyboard',function () {
+                vm.clipboard = vm.files.filter(function (a) {
+                    return a.selected;
+                }).map(function (a) {
+                    var b = clone(a);
+                    a.deleted = true;
+                    return b;
+                });
+                vm.files = vm.files.filter(function (a) {
+                    return !a.deleted;
+                });
+            })
+            $event.on('paste:keyboard',function () {
+                var arr = vm.clipboard;
+                vm.clearSelect();
+                vm.forEachGridEmptyPoint(function (x,y,index) {
+                    var item = arr.pop();
+                    item.x = x;
+                    item.y = y;
+                    item.selected = false;
+                    if(item.copy){
+                        item.name = item.name + " (2)";
+                    }
+                    item.copy = false;
+
+                    console.log(item);
+                    vm.files.push(item);
+
+                    if(index>=arr.length-1){
+                        return false;
+                    }
+                });
             })
         }
     }
