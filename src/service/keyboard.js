@@ -51,5 +51,6 @@ module.exports = {
             keypressMap[e.keyCode] = false;
             change();
         });
-    }
-}
+    },
+    keyMap:k
+};

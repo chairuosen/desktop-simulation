@@ -4,6 +4,7 @@
         padding:0;
         border:none;
         box-sizing:border-box;
+        -webkit-user-select:none;
     }
     html,body{
         height:100%;
@@ -26,7 +27,7 @@
     <div class="root">
         <wallpaper class="scope"></wallpaper>
         <file class="scope"></file>
-        <!--<action class="scope"></action>-->
+        <action class="scope"></action>
     </div>
 </template>
 

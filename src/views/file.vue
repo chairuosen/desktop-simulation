@@ -17,8 +17,8 @@
             top:50%;
             left:50%;
             transform:translateX(-50%) translateY(-50%);
-            height:120px;
-            width:100px;
+            height:100px;
+            width:80px;
             .icon{
                 height:80%;
                 width:100%;
@@ -43,7 +43,10 @@
                 width:option.cell.width+'px',
                 top:item.y*option.cell.height +'px',
                 left:item.x*option.cell.width +'px'
-             }">
+             }"
+             @mousedown="mousedownOnFileItem($event);"
+             @contextmenu="contextmenuOnFileItem($event)"
+        >
             <div class="file-body"
                  @click="select(item)"
                  @dragstart="dragstart($event,item)"
@@ -70,18 +73,29 @@
     var h = $(window).height();
     var maxRow = Math.floor(h/option.cell.height);
 
-    function getParsedXY(x,y){
-        x=x-option.cell.width/2;
-        y=y-option.cell.height/2;
+    function getParsedXY(x,y,halfRelative){
+        if(halfRelative!==false){
+            x=x-option.cell.width/2;
+            y=y-option.cell.height/2;
+        }
         return {
             x:Math.round(x/option.cell.width),
             y:Math.round(y/option.cell.height)
         };
     }
 
-    function clone(a) {
-        return JSON.parse(JSON.stringify(a));
-    }
+    var util = require('service/util');
+
+    var commandKeyPressed = false;
+    $(window).on('keydown',function (e) {
+        if(e.keyCode == require('service/keyboard').keyMap.cmd){
+            commandKeyPressed = true;
+        }
+    }).on('keyup',function (e) {
+        if(e.keyCode == require('service/keyboard').keyMap.cmd){
+            commandKeyPressed = false;
+        }
+    })
 
     module.exports = {
         data: function () {
@@ -101,9 +115,11 @@
         },
         methods: {
             select:function (item) {
-                this.files.map(function (a) {
-                    a.selected = false;
-                })
+                if( !commandKeyPressed ){
+                    this.files.map(function (a) {
+                        a.selected = false;
+                    })
+                }
                 item.selected = !item.selected;
             },
             dragstart:function (e,item) {
@@ -139,6 +155,18 @@
                         count++;
                     }
                 }
+            },
+            mousedownOnFileItem:function (e) {
+                if ( $(e.target).is('.file-item') && e.button==0 ){
+                    $event.emit('mousedown:file',{x:e.clientX,y:e.clientY})
+                }
+            },
+            contextmenuOnFileItem:function (e) {
+                if ( $(e.target).is('.file-item') ){
+                    $event.emit('contextmenu:wallpaper',{x:e.clientX,y:e.clientY})
+                }else{
+                    $event.emit('contextmenu:file',{x:e.clientX,y:e.clientY})
+                }
             }
         },
         components: {},
@@ -157,7 +185,7 @@
                 vm.clipboard = vm.files.filter(function (a) {
                     return a.selected;
                 }).map(function (a) {
-                    var b = clone(a)
+                    var b = util.clone(a)
                     b.copy = true;
                     return b;
                 });
@@ -166,7 +194,7 @@
                 vm.clipboard = vm.files.filter(function (a) {
                     return a.selected;
                 }).map(function (a) {
-                    var b = clone(a);
+                    var b = util.clone(a);
                     a.deleted = true;
                     return b;
                 });
@@ -190,11 +218,26 @@
                     console.log(item);
                     vm.files.push(item);
 
-                    if(index>=arr.length-1){
+                    if(!arr.length){
                         return false;
                     }
                 });
-            })
+            });
+            
+            $event.on('selection:mouse-action',function (e,data) {
+                var a = getParsedXY(data.topLeft.x,data.topLeft.y,false);
+                var b = getParsedXY(data.bottomRight.x,data.bottomRight.y,false);
+                var yRange = [a.y,b.y];
+                var xRange = [a.x,b.x];
+                vm.files.forEach(function (item) {
+                    item.selected = false;
+                    if(item.x>=xRange[0]  && item.x<=xRange[1]){
+                        if(item.y>=yRange[0] && item.y<=yRange[1] ){
+                            item.selected = true;
+                        }
+                    }
+                })
+            });
         }
     }
 </script>
