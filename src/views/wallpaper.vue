@@ -11,9 +11,8 @@
             @click="emit('click:wallpaper',$event);"
             @drop="drop($event);"
             @dragover="dragover($event)"
-            @mousedown="emit('mousedown:wallpaper',$event);"
+            @mousedown="mousedown($event)"
             @mouseup="emit('mouseup:wallpaper',$event);"
-            v-el:wallpaper
     >
 
     </div>
@@ -36,6 +35,13 @@
             },
             dragover:function (e) {
                 e.preventDefault();
+            },
+            mousedown:function (e) {
+                if(e.button==2){
+                    $event.emit('contextmenu:wallpaper',{x:e.clientX,y:e.clientY})
+                }else if(e.button==0){
+                    $event.emit('mousedown:wallpaper',{x:e.clientX,y:e.clientY})
+                }
             }
         },
         components: {},

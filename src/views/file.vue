@@ -30,6 +30,7 @@
                 height:20%;
                 line-height:14px;
                 text-align:center;
+                margin: 0 -20px;
             }
         }
     }
@@ -45,7 +46,7 @@
                 left:item.x*option.cell.width +'px'
              }"
              @mousedown="mousedownOnFileItem($event);"
-             @contextmenu="contextmenuOnFileItem($event)"
+             @contextmenu="contextmenuOnFileItem($event,item)"
         >
             <div class="file-body"
                  @click="select(item)"
@@ -161,10 +162,14 @@
                     $event.emit('mousedown:file',{x:e.clientX,y:e.clientY})
                 }
             },
-            contextmenuOnFileItem:function (e) {
+            contextmenuOnFileItem:function (e,item) {
                 if ( $(e.target).is('.file-item') ){
                     $event.emit('contextmenu:wallpaper',{x:e.clientX,y:e.clientY})
                 }else{
+                    if( !item.selected ){
+                        this.clearSelect();
+                        item.selected = true;
+                    }
                     $event.emit('contextmenu:file',{x:e.clientX,y:e.clientY})
                 }
             }
@@ -181,7 +186,7 @@
                 vm.draggingItem.y = targetPosition.y;
                 vm.draggingItem = null;
             });
-            $event.on('copy:keyboard',function () {
+            $event.on('copy:keyboard copy:menu',function () {
                 vm.clipboard = vm.files.filter(function (a) {
                     return a.selected;
                 }).map(function (a) {
@@ -190,7 +195,7 @@
                     return b;
                 });
             });
-            $event.on('cut:keyboard',function () {
+            $event.on('cut:keyboard cut:menu',function () {
                 vm.clipboard = vm.files.filter(function (a) {
                     return a.selected;
                 }).map(function (a) {
@@ -202,7 +207,7 @@
                     return !a.deleted;
                 });
             })
-            $event.on('paste:keyboard',function () {
+            $event.on('paste:keyboard paste:menu',function () {
                 var arr = vm.clipboard;
                 vm.clearSelect();
                 vm.forEachGridEmptyPoint(function (x,y,index) {
@@ -238,6 +243,9 @@
                     }
                 })
             });
+            $event.on('contextmenu:wallpaper',function () {
+                vm.clearSelect();
+            })
         }
     }
 </script>
