@@ -33,46 +33,7 @@
 <script>
     var util = require('service/util');
 
-    var menuForFile = [
-        {
-            text:"复制",
-            type:"copy",
-            disabled:false,
-            callback:function () {
-                $event.emit('copy:menu')
-            }
-        },
-        {
-            type:"divide"
-        },
-        {
-            text:"删除",
-            type:"delete",
-            disabled:false,
-            callback:function () {
-                $event.emit('delete:menu')
-            }
-        },
-    ];
-
-    var menuForDesktop = [
-        {
-            text:"刷新",
-            type:"refresh",
-            disabled:false,
-            callback:function () {
-//                console.log(1);
-            }
-        },
-        {
-            text:"粘贴",
-            type:"paste",
-            disabled:true,
-            callback:function () {
-                $event.emit('paste:menu')
-            }
-        },
-    ];
+    var menuData = require('data/menu');
 
     module.exports = {
         data: function () {
@@ -139,26 +100,30 @@
 
             $event.on('contextmenu:file',function (e,data) {
 //                console.log('file menu',data);
-                vm.menu.data = menuForFile;
+                vm.menu.data = menuData.file;
                 vm.menu.position = data;
             });
             $event.on('contextmenu:wallpaper',function (e,data) {
 //                console.log('desktop menu');
-                vm.menu.data = menuForDesktop;
+                vm.menu.data = menuData.wallpaper;
                 vm.menu.position = data;
                 console.log(1);
             });
             $event.on('mousedown:wallpaper',function (e,data) {
                 vm.menu.data = null;
             });
-            var pasteMenu = menuForDesktop.filter(function (a) {
+            var pasteOption = menuData.wallpaper.filter(function (a) {
                 return a.type=='paste'
             })[0];
             $event.on('copy:keyboard copy:menu cut:keyboard cut:menu',function () {
-                pasteMenu.disabled = false;
+                if(pasteOption){
+                    pasteOption.disabled = false;
+                }
             });
             $event.on('paste:keyboard paste:menu',function () {
-                pasteMenu.disabled = true;
+                if(pasteOption){
+                    pasteOption.disabled = true;
+                }
             })
         }
     }
