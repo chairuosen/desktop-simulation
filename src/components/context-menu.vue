@@ -7,6 +7,7 @@
             padding:5px 0;
             list-style: none;
             .list-item{
+                cursor: default;
                 color:#333;
                 padding: 0 10px;
                 &:hover{
