@@ -4,7 +4,7 @@ var path = require('path');
 
 
 var htmlOption = {
-    title:"Desktop Simulate"
+    title:"Desktop Simulation"
 }
 
 module.exports = {
