@@ -40,9 +40,9 @@
     <div class="root">
         <wallpaper class="scope"></wallpaper>
         <file class="scope" :apps.sync="apps"></file>
-        <action class="scope"></action>
         <application class="scope" :apps.sync="apps"></application>
         <taskbar class="scope" :apps.sync="apps"></taskbar>
+        <action class="scope"></action>
     </div>
 </template>
 
