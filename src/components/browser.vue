@@ -133,7 +133,9 @@
         components: {},
         ready: function () {
             if(this.app.data){
-                this.src = this.url =  this.app.data.index;
+                this.url = this.app.data.index;
+                this.fixUrl();
+                this.go();
             }
         }
     }

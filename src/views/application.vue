@@ -164,7 +164,7 @@
             <div class="app-body" :style="{height:app.height-30+'px'}">
                 <component  :is="app.type" :app.sync="app"></component>
             </div>
-            <div class="resize-overlay" v-show="current.resize.bottom || current.resize.right || current.resize.both"></div>
+            <div class="resize-overlay" v-show="current.drag || current.resize.bottom || current.resize.right || current.resize.both"></div>
             <div
                     class="resize-handle resize-handle-right"
                     @mousedown="resizeRightMousedown(app,$event)"

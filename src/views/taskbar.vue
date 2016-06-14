@@ -19,11 +19,13 @@
             min-width:100px;
             padding:0 20px 0 15px;
             text-align:center;
-            line-height:@h+5px;
-            background:#666;
+            line-height:@h;
+            color:#999;
+            background:#505050;
             margin-right:2px;
             &.actived{
-                background:#999;
+                background:#333;
+                color:#fff;
             }
             .icon{
                 display:inline-block;
