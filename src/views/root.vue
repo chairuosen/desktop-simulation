@@ -40,9 +40,10 @@
     <div class="root">
         <wallpaper class="scope"></wallpaper>
         <file class="scope" :apps.sync="apps"></file>
+        <selection class="scope"></selection>
         <application class="scope" :apps.sync="apps"></application>
         <taskbar class="scope" :apps.sync="apps"></taskbar>
-        <action class="scope"></action>
+        <mousemenu class="scope"></mousemenu>
     </div>
 </template>
 
@@ -65,9 +66,10 @@
         components:{
             wallpaper:require('views/wallpaper.vue'),
             file:require('views/file.vue'),
-            action:require('views/action.vue'),
+            selection:require('views/selection.vue'),
             application:require('views/application.vue'),
-            taskbar:require('views/taskbar.vue')
+            taskbar:require('views/taskbar.vue'),
+            mousemenu:require('views/mouse-menu.vue')
         },
         ready:function () {
             var vm = this;
