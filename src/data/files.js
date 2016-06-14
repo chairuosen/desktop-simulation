@@ -25,7 +25,7 @@ module.exports = [
     },
     {
         name:"自定义App",
-        app:"customApp",
+        app:"custom-app",
         icon:"",
         data:{}
     }

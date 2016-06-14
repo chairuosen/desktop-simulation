@@ -20,7 +20,7 @@ var server = new WebpackDevServer(webpack(config), {
     historyApiFallback: true,
 
     filename: config.entry.main[0],
-    publicPath: config.output.publicPath,
+    publicPath: "/",
     stats: {
         colors: true
     }

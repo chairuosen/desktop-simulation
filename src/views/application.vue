@@ -202,7 +202,8 @@
 <script>
     var appWindowMinWidth = 400;
     var appWindowMinHeight = 200;
-    module.exports = {
+
+    var object = {
         props:{
             apps:true
         },
@@ -274,10 +275,7 @@
                 app.hide();
             }
         },
-        components: {
-            browser:require('components/apps/browser.vue'),
-            customApp:require('components/apps/custom-app.vue'),
-        },
+        components: {},
         ready: function () {
             var vm = this;
             var $w = $(window);
@@ -346,5 +344,16 @@
                 }
             }).on('mouseup',vm.mouseup);
         }
-    }
+    };
+
+    // auto load apps in `../components/apps/`
+    var appRequire = require.context('../components/apps/', true, /\.vue$/);
+    var appPathArr = appRequire.keys();
+    appPathArr.forEach(function (appPath) {
+        var appName = appPath.match(/\.\/([a-z\-_]*)\.vue$/)[1].replace(/-(\w)/,function(match,match1){
+            return match1.toUpperCase();
+        });
+        object.components[appName] = appRequire(appPath);
+    });
+    module.exports = object;
 </script>
