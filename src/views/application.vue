@@ -56,6 +56,12 @@
                 height:@titleHeight - 2*@margin;
                 margin:@margin @margin 0 0;
                 float:left;
+                &.disabled{
+                    background:#ccc;
+                    &:before,&:after{
+                        border-color:#ddd;
+                    }
+                }
             }
             .c1{
                 background:#81C2D0;
@@ -175,7 +181,7 @@
                 {{app.title}}
                 <div class="app-control">
                     <span class="c c1" @mousedown="hideApp(app)"></span>
-                    <span class="c c2" @mousedown="maxApp(app)"></span>
+                    <span class="c c2" v-show="app.resizable" @mousedown="app.resizable && maxApp(app)"></span>
                     <span class="c c3" @mousedown="closeApp(app)"></span>
                 </div>
             </header>
@@ -184,14 +190,17 @@
             </div>
             <div class="resize-overlay" v-show="current.drag || current.resize.bottom || current.resize.right || current.resize.both"></div>
             <div
+                    v-show="app.resizable"
                     class="resize-handle resize-handle-right"
                     @mousedown="resizeRightMousedown(app,$event)"
             ></div>
             <div
+                    v-show="app.resizable"
                     class="resize-handle resize-handle-bottom"
                     @mousedown="resizeBottomMousedown(app,$event)"
             ></div>
             <div
+                    v-show="app.resizable"
                     class="resize-handle resize-handle-both"
                     @mousedown="resizeBothMousedown(app,$event)"
             ></div>

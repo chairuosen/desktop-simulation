@@ -3,30 +3,39 @@ module.exports = [
         name:"Safari",
         app:"browser",
         icon:"safari",
-        data:{
-            index:"http://baidu.com"
+        options:{
+            data:{
+                index:"http://baidu.com"
+            }
         }
     },
     {
         name:"Chrome",
         app:"browser",
         icon:"chrome",
-        data:{
-            index:"http://v2ex.com"
+        options:{
+            data:{
+                index:"http://v2ex.com"
+            }
         }
     },
     {
         name:"Firefox",
         app:"browser",
         icon:"firefox",
-        data:{
-            index:"http://qq.com"
+        options:{
+            data:{
+                index:"http://qq.com"
+            },
+            resizable:false
         }
     },
     {
         name:"自定义App",
         app:"custom-app",
         icon:"",
-        data:{}
+        options:{
+
+        }
     }
 ];

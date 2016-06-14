@@ -18,7 +18,8 @@ function App(o) {
         data:null,
         animating:false,
         maximized: false,
-        oldPosition: null
+        oldPosition: null,
+        resizable:true
     };
     $.extend(_default,o);
     $.extend(this,_default);
@@ -70,10 +71,16 @@ function App(o) {
     }
 
     this.set = function (key,value) {
-        if(['height','width'].indexOf(key)>=0){
+        var isResize = ['height','width'].indexOf(key)>=0;
+        if(isResize){
             this.maximized = false;
+            
+            if(this.resizable){
+                this[key] = value;
+            }
+        }else{
+            this[key] = value;
         }
-        this[key] = value;
     }
 
 }

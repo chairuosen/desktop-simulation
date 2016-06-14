@@ -123,12 +123,15 @@
         },
         methods: {
             openApp:function (file) {
-                var app = new App({
+                var options = {
                     title:file.name,
                     type:file.app,
-                    data:file.data,
                     icon:file.icon
-                });
+                };
+                if(file.options){
+                    $.extend(options,file.options)
+                }
+                var app = new App(options);
                 this.$dispatch('switchApp',app);
                 this.apps.push(app);
                 file.selected = false;
