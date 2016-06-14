@@ -1,7 +1,8 @@
 module.exports = [
     {
-        name:"Safari",
+        name:"Safariaaaaaaaaaaaaaa",
         app:"browser",
+        icon:"safari",
         data:{
             index:"http://baidu.com"
         }
@@ -9,6 +10,7 @@ module.exports = [
     {
         name:"Chrome",
         app:"browser",
+        icon:"chrome",
         data:{
             index:"http://v2ex.com"
         }
@@ -16,6 +18,7 @@ module.exports = [
     {
         name:"Firefox",
         app:"browser",
+        icon:"firefox",
         data:{
             index:"http://qq.com"
         }

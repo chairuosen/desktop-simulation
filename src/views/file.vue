@@ -21,14 +21,15 @@
                 height:80%;
                 width:100%;
                 margin:0 auto;
-                background:url(../images/file.png) no-repeat center center;
                 background-size:64px;
             }
             .text{
                 height:20%;
                 line-height:14px;
                 text-align:center;
-                margin: 0 -20px;
+                margin: 0 -10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
     }
@@ -52,7 +53,7 @@
                  @dragstart="dragstart($event,item)"
                  draggable="true"
             >
-                <div class="icon">
+                <div class="icon {{item.icon}}">
 
                 </div>
                 <div class="text">
@@ -125,7 +126,8 @@
                 var app = new App({
                     title:file.name,
                     type:file.app,
-                    data:file.data
+                    data:file.data,
+                    icon:file.icon
                 });
                 this.$dispatch('switchApp',app);
                 this.apps.push(app);

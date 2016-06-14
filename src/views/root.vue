@@ -22,6 +22,19 @@
         }
     }
 
+    .icon{
+        background:url(../images/file.png) no-repeat center center;
+        &.firefox{
+            background-image:url(../images/firefox.png);
+        }
+        &.chrome{
+            background-image:url(../images/chrome.png);
+        }
+        &.safari{
+            background-image:url(../images/safari.png);
+        }
+    }
+
 </style>
 <template>
     <div class="root">
@@ -35,10 +48,7 @@
 
 <script>
     var App = require('service/app').App;
-    var apps = [new App({
-        title:"test",
-        type:"browser"
-    })];
+    var apps = [];
 
     require('service/keyboard').init();
     require('service/global-var');

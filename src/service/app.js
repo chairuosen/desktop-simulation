@@ -8,6 +8,7 @@ module.exports = {
         var _default = {
             show: true,
             title: "app",
+            icon:"",
             actived: false,
             type: null,
             top: 100 + count * 2,

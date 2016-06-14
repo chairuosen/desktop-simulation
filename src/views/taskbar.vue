@@ -16,13 +16,24 @@
         .app-item{
             float:left;
             height:@h;
-            width:100px;
+            min-width:100px;
+            padding:0 20px 0 15px;
             text-align:center;
-            line-height:@h;
+            line-height:@h+5px;
             background:#666;
             margin-right:2px;
             &.actived{
                 background:#999;
+            }
+            .icon{
+                display:inline-block;
+                width:25px;
+                height:25px;
+                margin-right:5px;
+                background-size:cover;
+                vertical-align: top;
+                position:relative;
+                top:7px;
             }
         }
     }
@@ -36,7 +47,7 @@
                     v-for="app in sortedApps"
                     @click="click(app)"
             >
-                {{app.title}}
+                <span class="icon {{app.icon}}"></span>{{app.title}}
             </div>
         </div>
     </div>
