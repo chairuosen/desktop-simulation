@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && cp src/index.html dist/",
-    "dev": "mkdir dist;cp src/index.html dist/;node dev.js"
+    "build": "webpack",
+    "dev": "node dev.js",
+    "clean":"rm -rf ./dist"
   },
   "repository": {
     "type": "git",

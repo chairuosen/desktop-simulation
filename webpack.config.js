@@ -1,5 +1,11 @@
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
+
+
+var htmlOption = {
+    title:"Desktop Simulate"
+}
 
 module.exports = {
     resolve:{
@@ -11,7 +17,7 @@ module.exports = {
     output:{
         path:'./dist',
         publicPath:'./',
-        filename:'[name].js'
+        filename:'[name].[hash].js'
     },
     module: {
         loaders: [
@@ -33,5 +39,7 @@ module.exports = {
             }
         ]
     },
-    plugins:[]
+    plugins:[
+        new HtmlWebpackPlugin(htmlOption)
+    ]
 }
