@@ -125,6 +125,7 @@
                 var app = new App({
                     title:file.name,
                     type:file.app,
+                    data:file.data
                 });
                 this.$dispatch('switchApp',app);
                 this.apps.push(app);

@@ -14,6 +14,7 @@ module.exports = {
             left: 100 + count * 2,
             height: 400,
             width: 600,
+            data:null,
             animating:false,
             maximized: false,
             oldPosition: null

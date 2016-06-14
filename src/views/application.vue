@@ -106,6 +106,13 @@
             right:0;
             bottom:0;
         }
+        .resize-overlay{
+            position:absolute;
+            top:0;
+            left:0;
+            height:100%;
+            width:100%;
+        }
         .resize-handle-right{
             height:100%;
             width:@reactionWidth;
@@ -154,9 +161,10 @@
                     <span class="icon c3" @mousedown="closeApp(app)"></span>
                 </div>
             </header>
-            <div class="app-body">
-                <component  :is="app.type"></component>
+            <div class="app-body" :style="{height:app.height-30+'px'}">
+                <component  :is="app.type" :app.sync="app"></component>
             </div>
+            <div class="resize-overlay" v-show="current.resize.bottom || current.resize.right || current.resize.both"></div>
             <div
                     class="resize-handle resize-handle-right"
                     @mousedown="resizeRightMousedown(app,$event)"
@@ -187,7 +195,8 @@
                     drag:false,
                     resize:{
                         right:false,
-                        bottom:false
+                        bottom:false,
+                        both:false
                     }
                 },
 

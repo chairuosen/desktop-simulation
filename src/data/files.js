@@ -1,14 +1,23 @@
 module.exports = [
     {
         name:"Safari",
-        app:"browser"
+        app:"browser",
+        data:{
+            index:"http://baidu.com"
+        }
     },
     {
         name:"Chrome",
-        app:"browser"
+        app:"browser",
+        data:{
+            index:"http://v2ex.com"
+        }
     },
     {
         name:"Firefox",
-        app:"browser"
+        app:"browser",
+        data:{
+            index:"http://qq.com"
+        }
     }
 ];
