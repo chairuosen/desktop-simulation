@@ -138,9 +138,7 @@
             },
             select:function (item) {
                 if( !commandKeyPressed ){
-                    this.files.map(function (a) {
-                        a.selected = false;
-                    })
+                    this.clearSelect();
                 }
                 item.selected = !item.selected;
             },

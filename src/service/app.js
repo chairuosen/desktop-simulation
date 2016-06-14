@@ -13,8 +13,8 @@ function App(o) {
         type: null,
         top: 100 + count * 2,
         left: 100 + count * 2,
-        height: 400,
-        width: 600,
+        height: window._h*0.8,
+        width: window._w*0.8,
         data:null,
         animating:false,
         maximized: false,
@@ -74,7 +74,7 @@ function App(o) {
         var isResize = ['height','width'].indexOf(key)>=0;
         if(isResize){
             this.maximized = false;
-            
+
             if(this.resizable){
                 this[key] = value;
             }

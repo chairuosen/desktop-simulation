@@ -6,7 +6,7 @@
     @headerHeight:30px;
     .browser-header{
         height:@headerHeight;
-        background:#ddd;
+        background:#F3F3F3;
         position:absolute;
         top:0;
         left:0;
@@ -38,6 +38,9 @@
                 height:@headerHeight - 2*@margin;
                 position:relative;
                 top:@margin;
+                &:focus{
+                    outline:none;
+                }
             }
             .browser-address-input-container{
                 margin-right:50px;
@@ -50,9 +53,10 @@
                 text-align:center;
                 top:@margin;
                 line-height:@headerHeight - 2*@margin;
-                background:#aaa;
+                background: #E8E8E8;
+                color: #999;
                 &:hover{
-                    background:#bbb;
+                    background:#eee;
                 }
                 &:active{
                     background:#ccc;
