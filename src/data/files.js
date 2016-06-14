@@ -22,5 +22,11 @@ module.exports = [
         data:{
             index:"http://qq.com"
         }
+    },
+    {
+        name:"自定义App",
+        app:"customApp",
+        icon:"",
+        data:{}
     }
 ];

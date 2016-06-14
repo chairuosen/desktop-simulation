@@ -257,7 +257,8 @@
             }
         },
         components: {
-            browser:require('components/browser.vue')
+            browser:require('components/apps/browser.vue'),
+            customApp:require('components/apps/custom-app.vue'),
         },
         ready: function () {
             var vm = this;
