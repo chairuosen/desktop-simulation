@@ -274,8 +274,11 @@
                 }
             },
             closeApp:function (app) {
+                app.close();
+            },
+            checkClose:function () {
                 this.apps = this.apps.filter(function (a) {
-                    return a !== app;
+                    return !a.closed;
                 });
             },
             maxApp:function (app) {
@@ -354,6 +357,10 @@
                     outside = false;
                 }
             }).on('mouseup',vm.mouseup);
+            
+            $event.on('app:close',function () {
+                vm.checkClose();
+            })
         }
     };
 

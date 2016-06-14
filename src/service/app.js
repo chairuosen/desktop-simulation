@@ -19,7 +19,8 @@ function App(o) {
         animating:false,
         maximized: false,
         oldPosition: null,
-        resizable:true
+        resizable:true,
+        closed:false
     };
     $.extend(_default,o);
     $.extend(this,_default);
@@ -30,6 +31,11 @@ function App(o) {
         this.show = false;
         this.actived = false;
     };
+
+    this.close = function () {
+        this.closed = true;
+        $event.emit('app:close',this);
+    }
 
     this.maximize = function () {
         var _this = this;
