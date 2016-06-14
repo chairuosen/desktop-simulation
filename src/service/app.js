@@ -20,6 +20,7 @@ function App(o) {
         maximized: false,
         oldPosition: null,
         resizable:true,
+        singleton:false,
         closed:false
     };
     $.extend(_default,o);

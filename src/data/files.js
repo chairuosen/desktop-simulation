@@ -27,6 +27,7 @@ module.exports = [
             data:{
                 index:"http://qq.com"
             },
+            singleton:true
             // resizable:false
         }
     },

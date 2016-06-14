@@ -303,7 +303,14 @@
             }
             $event.on('app:switch',function (e,app) {
                 vm.switchApp(app);
-            })
+            });
+
+            $event.on('app:open',function (e,app) {
+                if(vm.apps.indexOf(app)==-1){
+                    vm.apps.push(app);
+                }
+                vm.switchApp(app);
+            });
 
             $w.on('mousemove',function (e) {
                 var app = vm.current.app;

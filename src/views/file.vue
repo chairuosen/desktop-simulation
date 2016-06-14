@@ -131,10 +131,21 @@
                 if(file.options){
                     $.extend(options,file.options)
                 }
+
+                if(file._openedApp && file._openedApp.closed){
+                    file._openedApp = null;
+                }
+
                 var app = new App(options);
-                this.$dispatch('switchApp',app);
-                this.apps.push(app);
+
+                if(app.singleton && file._openedApp){
+                    app = file._openedApp;
+                }
+
+                $event.emit('app:open',app);
+
                 file.selected = false;
+                file._openedApp = app;
             },
             select:function (item) {
                 if( !commandKeyPressed ){
