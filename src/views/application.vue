@@ -6,6 +6,9 @@
         overflow:hidden;
         box-shadow:0 5px 25px rgba(0, 0, 0, 0.4);
         @titleHeight:30px;
+        &.animating{
+            transition: all ease 0.5s;
+        }
         .app-title{
             position:relative;
             background:#ddd;
@@ -126,7 +129,10 @@
                 v-for="app in apps"
                 class="app"
                 v-show="app.show"
-                :class="{actived:app.actived}"
+                :class="{
+                actived:app.actived,
+                animating:app.animating
+                }"
                 :style="{
                 top:app.top+'px',
                 left:app.left+'px',
@@ -234,6 +240,7 @@
                 });
             },
             maxApp:function (app) {
+                this.switchApp(app);
                 app.maximize();
             },
             hideApp:function (app) {
@@ -279,7 +286,7 @@
                         return;
                     }
                     var height = e.clientY - vm.current.resize.bottom.d - app.top;
-                    app.height = Math.max(Math.min(height,window._h),appWindowMinHeight);
+                    app.set('height',Math.max(Math.min(height,window._h),appWindowMinHeight));
                 }
 
                 if(vm.current.resize.right){
@@ -289,7 +296,7 @@
                         return;
                     }
                     var width = e.clientX - vm.current.resize.right.d - app.left;
-                    app.width = Math.max(Math.min(width,window._w),appWindowMinWidth);
+                    app.set('width',Math.max(Math.min(width,window._w),appWindowMinWidth));
                 }
 
                 if(vm.current.resize.both){
@@ -300,8 +307,8 @@
                     }
                     var height = e.clientY - vm.current.resize.both.dy - app.top;
                     var width = e.clientX - vm.current.resize.both.dx - app.left;
-                    app.height = Math.max(Math.min(height,window._h),appWindowMinHeight);
-                    app.width =  Math.max(Math.min(width,window._w),appWindowMinWidth);
+                    app.set('height',Math.max(Math.min(height,window._h),appWindowMinHeight));
+                    app.set('width',Math.max(Math.min(width,window._w),appWindowMinWidth));
                 }
 
                 if(e.clientY>window._h || e.clientX > window._w || e.clientY<0 || e.clientX <0){
