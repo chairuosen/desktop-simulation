@@ -114,10 +114,8 @@
                 clipboard:[],
                 draggingItem:null,
                 files:require('data/files.js').map(function (item,index) {
-                    var x = Math.floor(index/maxRow);
-                    var y = index%maxRow;
-                    item.x = x;
-                    item.y = y;
+                    item.x = Math.floor(index/maxRow);
+                    item.y = index%maxRow;
                     item.selected = false;
                     return item;
                 })
