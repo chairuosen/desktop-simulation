@@ -1,24 +1,24 @@
 Desktop-simulation
 ======================
 
- ## Init
+## Init
  
  ```
  npm install
  ```
  
- ## build
+## build
  
  ```
  npm run build
  ```
  
- ## dev
+## dev
  
  ```
  npm run dev
  ```
  
- ## Add Custom Apps
+## Add Custom Apps
  
  Add app code to `src/components/apps/`, and app icon to `src/data/files.js`.
