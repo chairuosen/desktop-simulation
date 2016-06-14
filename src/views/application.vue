@@ -37,7 +37,7 @@
         &.actived{
             box-shadow:0 5px 35px rgba(0, 0, 0, 0.6);
             .app-title{
-                backgroud:#F2F6FF;
+                backgroud:#D0E3FF;
                 background: linear-gradient( rgba(255,255,255,0.5), rgba(255,255,255,0) 70% ) , linear-gradient(120deg,#E2E9F9,#D0E3FF);
                 color:#333;
             }
