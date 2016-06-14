@@ -176,7 +176,7 @@
         components: {},
         ready: function () {
             var vm = this;
-            $event.on('click:wallpaper',function (e,data) {
+            $event.on('mousedown:wallpaper',function (e,data) {
                 vm.clearSelect();
             });
             $event.on('drop:wallpaper',function (e,data) {
