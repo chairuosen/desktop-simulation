@@ -23,7 +23,7 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  
 ## Add Custom Apps
  
- Add app code to `src/components/apps/`, and app icon to `src/data/files.js`.
+ Write app component code in `src/components/apps/`, and add desktop icon data to `src/data/files.js`.
  
  App Class:
  
@@ -46,7 +46,7 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  closed:false               
  ```
  
- File example:
+ Icon data example:
  
  ```
  {
