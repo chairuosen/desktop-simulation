@@ -15,21 +15,23 @@
             top:50%;
             left:50%;
             transform:translateX(-50%) translateY(-50%);
-            height:100px;
-            width:80px;
+            width:90px;
             .icon{
-                height:80%;
+                height:80px;
                 width:100%;
                 margin:0 auto;
                 background-size:64px;
             }
             .text{
-                height:20%;
-                line-height:14px;
+                min-height:20px;
+                line-height:20px;
                 text-align:center;
-                margin: 0 -10px;
+                /*margin:0 -10px; */
                 overflow: hidden;
+                word-wrap: break-word;
+                word-break: break-all;
                 text-overflow: ellipsis;
+                padding-bottom:5px;
             }
         }
     }
