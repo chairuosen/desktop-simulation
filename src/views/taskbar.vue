@@ -86,7 +86,7 @@
                 if(app.actived){
                     app.hide();
                 }else{
-                    this.$dispatch('switchApp',app);
+                    $event.emit('app:switch',app);
                 }
             }
         },

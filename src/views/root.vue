@@ -73,9 +73,6 @@
         },
         ready:function () {
             var vm = this;
-            vm.$on('switchApp',function (data) {
-                vm.$broadcast('switchApp',data);
-            })
         }
     };
 </script>

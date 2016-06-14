@@ -301,8 +301,8 @@
                 });
                 vm.switchApp(vm.apps[0]);
             }
-            vm.$on('switchApp',function (data) {
-                vm.switchApp(data);
+            $event.on('app:switch',function (e,app) {
+                vm.switchApp(app);
             })
 
             $w.on('mousemove',function (e) {
