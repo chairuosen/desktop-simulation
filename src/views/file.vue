@@ -141,6 +141,11 @@
                 }
                 item.selected = !item.selected;
             },
+            selectAll:function () {
+                this.files.forEach(function (a) {
+                    a.selected = true;
+                })
+            },
             dragstart:function (e,item) {
                 this.draggingItem = item;
             },
@@ -229,12 +234,15 @@
                 vm.files = vm.files.filter(function (a) {
                     return !a.selected;
                 })
+            });
+            $event.on('selectAll:keyboard selectAll:menu',function () {
+                vm.selectAll();
             })
             $event.on('paste:keyboard paste:menu',function () {
                 var arr = vm.clipboard;
                 vm.clearSelect();
                 vm.forEachGridEmptyPoint(function (x,y,index) {
-                    var item = arr.pop();
+                    var item = arr.shift();
                     item.x = x;
                     item.y = y;
                     item.selected = false;

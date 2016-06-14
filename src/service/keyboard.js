@@ -27,11 +27,13 @@ var k = {
     'c':67,
     'v':86,
     'x':88,
+    'a':65
 }
 var combination = {
     "copy":[ [k.cmd,k.c], [k.ctrl,k.c] ],
     "paste":[ [k.cmd,k.v], [k.ctrl,k.v] ],
-    "cut":[ [k.cmd,k.x], [k.ctrl,k.x] ]
+    "cut":[ [k.cmd,k.x], [k.ctrl,k.x] ],
+    "selectAll":[ [k.cmd,k.a], [k.ctrl,k.a] ]
 }
 
 var keypressMap = [];

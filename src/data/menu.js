@@ -30,6 +30,13 @@ module.exports = {
             }
         },
         {
+            text:'全选',
+            type:"selectAll",
+            callback:function () {
+                $event.emit('selectAll:menu');
+            }
+        },
+        {
             text:"粘贴",
             type:"paste",
             disabled:true,

@@ -1,6 +1,6 @@
 module.exports = [
     {
-        name:"Safariaaaaaaaaaaa",
+        name:"Safari",
         app:"browser",
         icon:"safari",
         data:{
