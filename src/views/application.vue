@@ -54,7 +54,7 @@
                     height:@h;
                     width:@w;
                     left:  ( @titleHeight - 2*@margin - @w ) /2;
-                    top: ( ( @titleHeight - 2*@margin - @h ) /2 ) - 4px;
+                    bottom: ( ( @titleHeight - 2*@margin - @h ) /2 ) - 4px;
                     background:#fff;
                 }
             }
