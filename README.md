@@ -1,7 +1,7 @@
 Desktop-simulation
 ======================
 
-Demo: http://demo.ruosen.io/desktop-simulate/
+Demo: http://demo.ruosen.io/desktop-simulation/
 
 ## Init
  
