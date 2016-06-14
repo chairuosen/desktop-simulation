@@ -26,7 +26,7 @@
 <template>
     <div class="root">
         <wallpaper class="scope"></wallpaper>
-        <file class="scope"></file>
+        <file class="scope" :apps.sync="apps"></file>
         <action class="scope"></action>
         <application class="scope" :apps.sync="apps"></application>
         <taskbar class="scope" :apps.sync="apps"></taskbar>
@@ -35,20 +35,10 @@
 
 <script>
     var App = require('service/app').App;
-    var apps = [
-        new App({
-            title:"Safari",
-            type:'browser',
-        }),
-        new App({
-            title:"Chrome",
-            type:'browser',
-        }),
-        new App({
-            title:"Firefox",
-            type:'browser',
-        })
-    ];
+    var apps = [new App({
+        title:"test",
+        type:"browser"
+    })];
 
     require('service/keyboard').init();
     require('service/global-var');

@@ -1,29 +1,14 @@
 module.exports = [
     {
-        name:"aaa.avi"
+        name:"Safari",
+        app:"browser"
     },
     {
-        name:"bbb.avi"
+        name:"Chrome",
+        app:"browser"
     },
     {
-        name:"ccc.avi"
-    },
-    {
-        name:"ddd.avi"
-    },
-    {
-        name:"eee.avi"
-    },
-    {
-        name:"fff.avi"
-    },
-    {
-        name:"ggg.avi"
-    },
-    {
-        name:"hhh.avi"
-    },
-    {
-        name:"iii.avi"
-    },
+        name:"Firefox",
+        app:"browser"
+    }
 ];

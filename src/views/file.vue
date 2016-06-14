@@ -9,6 +9,7 @@
             }
         }
         .file-body{
+            border:2px solid transparent;
             border-radius:3px;
             position:absolute;
             top:50%;
@@ -47,6 +48,7 @@
         >
             <div class="file-body"
                  @click="select(item)"
+                 @dblclick="openApp(item)"
                  @dragstart="dragstart($event,item)"
                  draggable="true"
             >
@@ -62,6 +64,8 @@
 </template>
 
 <script>
+    var App = require('service/app').App;
+
     var option = {
         cell:{
             height:130,
@@ -98,6 +102,9 @@
     })
 
     module.exports = {
+        props:{
+            apps:true
+        },
         data: function () {
             return {
                 option:option,
@@ -114,6 +121,15 @@
             }
         },
         methods: {
+            openApp:function (file) {
+                var app = new App({
+                    title:file.name,
+                    type:file.app,
+                });
+                this.$dispatch('switchApp',app);
+                this.apps.push(app);
+                file.selected = false;
+            },
             select:function (item) {
                 if( !commandKeyPressed ){
                     this.files.map(function (a) {

@@ -10,10 +10,10 @@ module.exports = {
             title: "app",
             actived: false,
             type: null,
-            top: 200 + count * 20,
-            left: 200 + count * 20,
+            top: 100 + count * 2,
+            left: 100 + count * 2,
             height: 400,
-            width: 400,
+            width: 600,
             animating:false,
             maximized: false,
             oldPosition: null
