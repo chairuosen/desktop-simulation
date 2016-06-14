@@ -70,7 +70,11 @@
         },
         methods: {
             click:function (app) {
-                this.$dispatch('switchApp',app);
+                if(app.actived){
+                    app.hide();
+                }else{
+                    this.$dispatch('switchApp',app);
+                }
             }
         },
         components: {},

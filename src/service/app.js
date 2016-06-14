@@ -13,6 +13,19 @@ module.exports = {
         };
         $.extend(_default,o);
         $.extend(this,_default);
+
+        this.hide = function () {
+            this.show = false;
+            this.actived = false;
+        };
+
+        this.maximize = function () {
+            this.top = 0;
+            this.left = 0;
+            this.height = window._h;
+            this.width = window._w;
+        }
+
         this.sortKey = count++;
     }
 }

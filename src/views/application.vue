@@ -4,7 +4,7 @@
         background:#fff;
         border-radius:5px;
         overflow:hidden;
-        box-shadow:0 5px 35px rgba(0, 0, 0, 0.4);
+        box-shadow:0 5px 25px rgba(0, 0, 0, 0.4);
         @titleHeight:30px;
         .app-title{
             position:relative;
@@ -13,6 +13,14 @@
             line-height:@titleHeight;
             height:@titleHeight;
             cursor: default;
+            color:#999;
+        }
+        &.actived{
+            box-shadow:0 5px 35px rgba(0, 0, 0, 0.6);
+            .app-title{
+                background:#bbb;
+                color:#333;
+            }
         }
         .app-body{
 
@@ -118,6 +126,7 @@
                 v-for="app in apps"
                 class="app"
                 v-show="app.show"
+                :class="{actived:app.actived}"
                 :style="{
                 top:app.top+'px',
                 left:app.left+'px',
@@ -125,7 +134,7 @@
                 height:app.height+'px'
                 }"
 
-                @mousedown="appWindowMousedown(app)"
+                @mousedown="appWindowMousedown(app,$event)"
         >
             <header
                     class="app-title"
@@ -181,6 +190,7 @@
         methods: {
             switchApp:function (app) {
                 this.current.app = app;
+                app.show = true;
                 var otherApps = this.apps.filter(function (a) {
                     a.actived = false;
                     return a!==app;
@@ -189,8 +199,10 @@
                 otherApps.push(app);
                 this.apps = otherApps;
             },
-            appWindowMousedown:function (app) {
-                this.switchApp(app);
+            appWindowMousedown:function (app,e) {
+                if( !$(e.target).is('.app-control *') ){
+                    this.switchApp(app);
+                }
             },
             titleMousedown:function (app,e) {
                 this.current.drag = {x:e.clientX-app.left,y:e.clientY-app.top};
@@ -222,14 +234,10 @@
                 });
             },
             maxApp:function (app) {
-                app.top = 0;
-                app.left = 0;
-                app.height = window._h;
-                app.width = window._w;
+                app.maximize();
             },
             hideApp:function (app) {
-                app.show = false;
-                app.actived = false;
+                app.hide();
             }
         },
         components: {
