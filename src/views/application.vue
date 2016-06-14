@@ -17,6 +17,21 @@
             height:@titleHeight;
             cursor: default;
             color:#999;
+            .icon{
+                /*position:absolute;*/
+                /*top:4px;*/
+                /*left:5px;*/
+
+                display: inline-block;
+                vertical-align: top;
+                position:relative;
+                top:5px;
+
+                height:18px;
+                width:18px;
+                background-size:cover;
+
+            }
         }
         &.actived{
             box-shadow:0 5px 35px rgba(0, 0, 0, 0.6);
@@ -34,7 +49,7 @@
             right:0;
             top:0;
             height:@titleHeight;
-            .icon{
+            .c{
                 display:block;
                 position:relative;
                 width:@titleHeight - 2*@margin;
@@ -154,11 +169,14 @@
                     @mousedown.self="titleMousedown(app,$event)"
                     @mouseup="mouseup()"
             >
+                <div class="icon {{app.icon}}">
+
+                </div>
                 {{app.title}}
                 <div class="app-control">
-                    <span class="icon c1" @mousedown="hideApp(app)"></span>
-                    <span class="icon c2" @mousedown="maxApp(app)"></span>
-                    <span class="icon c3" @mousedown="closeApp(app)"></span>
+                    <span class="c c1" @mousedown="hideApp(app)"></span>
+                    <span class="c c2" @mousedown="maxApp(app)"></span>
+                    <span class="c c3" @mousedown="closeApp(app)"></span>
                 </div>
             </header>
             <div class="app-body" :style="{height:app.height-30+'px'}">
