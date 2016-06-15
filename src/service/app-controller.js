@@ -1,4 +1,4 @@
-
+var util = require('service/util');
 var _this = {
     apps:[],
     openApp:function (app) {
@@ -54,11 +54,9 @@ var _this = {
         });
     },
     checkClose:function () {
-        var closedApp =  this.apps.filter(function (a) {
+        util.arrayRemove(this.apps,function (a) {
             return a._close;
         });
-        var index = this.apps.indexOf(closedApp[0]);
-        this.apps.splice(index,1);
     },
 };
 

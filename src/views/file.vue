@@ -69,6 +69,7 @@
 
 <script>
     var App = require('service/app').App;
+    var util = require('service/util');
     var appController = require('service/app-controller');
 
     var option = {
@@ -93,7 +94,7 @@
         return o;
     }
 
-    var util = require('service/util');
+
 
     var commandKeyPressed = false;
     $(window).on('keydown',function (e) {
@@ -227,18 +228,18 @@
                     a.deleted = true;
                     return b;
                 });
-                vm.files = vm.files.filter(function (a) {
-                    return !a.deleted;
+                util.arrayRemove(vm.files,function (a) {
+                    return a.deleted;
                 });
             });
             $event.on('delete:menu delete:keyboard',function () {
-                vm.files = vm.files.filter(function (a) {
-                    return !a.selected;
-                })
+                util.arrayRemove(vm.files,function (a) {
+                    return a.selected;
+                });
             });
             $event.on('selectAll:keyboard selectAll:menu',function () {
                 vm.selectAll();
-            })
+            });
             $event.on('paste:keyboard paste:menu',function () {
                 var arr = vm.clipboard;
                 vm.clearSelect();
