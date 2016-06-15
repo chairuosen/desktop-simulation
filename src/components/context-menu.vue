@@ -11,7 +11,7 @@
                 color:#333;
                 padding: 0 10px;
                 &:hover{
-                    background:rgba(50,100,155,0.8);
+                    background:#4b8de4;
                     color:#fff;
                 }
                 &.disabled{
