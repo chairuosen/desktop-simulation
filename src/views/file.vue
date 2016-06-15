@@ -107,7 +107,7 @@
 
     module.exports = {
         props:{
-            apps:true
+            apps:Array
         },
         data: function () {
             return {

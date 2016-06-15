@@ -218,7 +218,7 @@
 
     var object = {
         props:{
-            apps:true
+            apps:Array
         },
         data: function () {
             return {

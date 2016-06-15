@@ -68,7 +68,7 @@
 
     module.exports = {
         props:{
-            apps:true
+            apps:Array
         },
         computed:{
             sortedApps:function () {
