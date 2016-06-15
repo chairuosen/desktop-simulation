@@ -47,7 +47,7 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  ```
  -->
  
- Component (*.vue) example:
+ Component (my-app.vue) example:
  
  ```
  <style lang="less" rel="stylesheet/less">
@@ -84,12 +84,11 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  
  ```
  {
-     name:"Firefox",
-     app:"browser", // app component's file name
-     icon:"firefox", // defined in css .icon
+     name:"MyApp",
+     app:"my-app", // app component's file name
+     icon:"", // defined in css .icon
      options:{      // options will be extended to App Class's instance , it can be a function that returns options object
          data:{  
-             index:"http://qq.com" 
          },
          singleton:true,
          width: function () {  // value can be a function that returns dynamic value; 
