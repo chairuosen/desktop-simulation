@@ -5,7 +5,7 @@
         background:#fff;
         border-radius:5px;
         overflow:hidden;
-        box-shadow:0 5px 25px rgba(0, 0, 0, 0.4);
+        box-shadow:0 10px 25px rgba(0, 0, 0, 0.4);
         @titleHeight:30px;
         &.animating{
             transition: all ease 0.5s;
@@ -36,7 +36,7 @@
             }
         }
         &.focus{
-            box-shadow:0 5px 35px rgba(0, 0, 0, 0.6);
+            box-shadow:0 10px 35px rgba(0, 0, 0, 0.6);
             .app-title{
                 background:#e7eeff;
                 color:#333;

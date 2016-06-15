@@ -1,4 +1,5 @@
 <style lang="less" rel="stylesheet/less" scoped>
+    @import "../../global";
     .container{
          color:#333;
     }
@@ -17,19 +18,23 @@
     }
     .button{
         text-align:center;
-        border:1px solid #333;
+        border:1px solid #eee;
+        &.f{
+            background:@blue;
+            color:#fff;
+        }
     }
 </style>
 <template>
 <div>
     <div class="container" :style="containerStyle();">
-        <div class="button fr" :style="buttonStyle();" @click="clear();">clear</div>
+        <div class="button f fr" :style="buttonStyle();" @click="clear();">clear</div>
         <div class="screen" :style="screenStyle();">
             <span class="fr">{{computeSymbol[0]}}</span>
             {{currentValue}}
         </div>
         <div class="buttons">
-            <div class="button fl" v-for="b in buttons" :style="buttonStyle();" @click="click(b)">{{b[0]||b}}</div>
+            <div class="button fl" :class="{f:b[1]}" v-for="b in buttons" :style="buttonStyle();" @click="click(b)">{{b[0]||b}}</div>
         </div>
     </div>
 </div>
