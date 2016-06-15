@@ -18,6 +18,7 @@
             height:@titleHeight;
             cursor: default;
             color:#aaa;
+            .Filter(saturate(0.5));
             .icon{
                 position:absolute;
                 top:4px;
@@ -39,8 +40,6 @@
             .app-title{
                 background:#e7eeff;
                 color:#333;
-            }
-            .app-control{
                 .Filter(saturate(1.2));
             }
         }
@@ -53,7 +52,6 @@
             right:0;
             top:0;
             height:@titleHeight;
-            .Filter(saturate(0.5));
             .c{
                 display:block;
                 position:relative;
