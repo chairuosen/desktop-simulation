@@ -54,7 +54,7 @@ module.exports = [
         app: "calculator",
         icon: "",
         options: {
-            resizable:false,
+            // resizable:false,
             width:400,
             height:400,
             left:400

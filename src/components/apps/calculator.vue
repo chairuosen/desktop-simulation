@@ -5,7 +5,6 @@
     .screen{
         height:20%;
         width:75%;
-        font-size:40px;
     }
     .fr{
         float:right;
@@ -17,7 +16,6 @@
         overflow: hidden;
     }
     .button{
-        font-size:30px;
         text-align:center;
         border:1px solid #333;
     }
@@ -111,12 +109,14 @@
             },
             screenStyle:function () {
                 return {
-                    lineHeight:this.app.width/5+'px',
+                    fontSize:(this.app.height/5) * 0.5+'px',
+                    lineHeight:this.app.height/5+'px',
                     height:this.app.height/5+'px'
                 }
             },
             buttonStyle:function () {
                 return {
+                    fontSize:(this.app.height/5) * 0.4+'px',
                     width:this.app.width/4+'px',
                     lineHeight:this.app.height/5+'px',
                     height:this.app.height/5+'px'
