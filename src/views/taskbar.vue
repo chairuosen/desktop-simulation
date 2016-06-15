@@ -85,7 +85,7 @@
         },
         methods: {
             click:function (app) {
-                if(app.actived){
+                if(app.focus){
                     app.hide();
                 }else{
                     appController.switchApp(app)

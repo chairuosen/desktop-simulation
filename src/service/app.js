@@ -47,6 +47,11 @@ App.prototype.set = function (key,value) {
     }
 }
 
+App.prototype.showUp = function () {
+    this.show = true;
+    this.focus = true;
+}
+
 App.prototype.hide = function () {
     this.show = false;
     this.focus = false;

@@ -37,7 +37,6 @@ var _this = {
         file._openedApp = app;
     },
     switchApp:function (app) {
-        app.show = true;
         // var otherApps = this.apps.filter(function (a) {
         //     a.actived = false;
         //     return a!==app;
@@ -46,7 +45,7 @@ var _this = {
         // otherApps.push(app);
         // this.apps = otherApps;
 
-        app.focus = true;
+        app.showUp();
         this.apps.sort(function (a,b) {
             a.focus = false;
             b.focus = false;
