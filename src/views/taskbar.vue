@@ -32,7 +32,7 @@
             &.actived{
                 /*background:#4b8de4;*/
                 /*color:#fff;*/
-                color:@blue;
+                color:#111;
                 background:#fff;
                 .Filter(saturate(1));
             }
