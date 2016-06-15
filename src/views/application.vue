@@ -156,9 +156,9 @@
         <div
                 v-for="app in apps"
                 class="app"
-                v-show="app.show"
+                v-show="app._show"
                 :class="{
-                focus:app.isFocus(),
+                focus:app._focus,
                 animating:app.animating
                 }"
                 :style="{

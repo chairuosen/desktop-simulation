@@ -6,7 +6,7 @@ function delay(cb,n){
 
 function App(o) {
     var _default = {
-        show: true,
+        _show: true,
         title: "app",
         icon:"",
         _focus: false,
@@ -47,13 +47,13 @@ App.prototype.set = function (key,value) {
     }
 }
 
-App.prototype.showUp = function () {
-    this.show = true;
+App.prototype.show = function () {
+    this._show = true;
     this.focus();
 }
 
 App.prototype.hide = function () {
-    this.show = false;
+    this._show = false;
     this.blur();
 };
 
@@ -65,10 +65,6 @@ App.prototype.close = function () {
 App.prototype.focus = function () {
     this._focus = true;
     $event.emit('app:focus',this);
-}
-
-App.prototype.isFocus = function () {
-    return this._focus;
 }
 
 App.prototype.blur = function () {

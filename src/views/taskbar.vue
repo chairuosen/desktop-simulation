@@ -46,7 +46,7 @@
         <div class="app-list">
             <div
                     class="app-item"
-                    :class="{actived:app.isFocus()}"
+                    :class="{actived:app._focus}"
                     v-for="app in sortedApps"
                     @click="click(app)"
             >
@@ -85,7 +85,7 @@
         },
         methods: {
             click:function (app) {
-                if(app.isFocus()){
+                if(app._focus){
                     app.hide();
                 }else{
                     appController.switchApp(app)

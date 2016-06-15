@@ -28,7 +28,7 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  App Class:
  
  ```
- show: true, 
+ _show: true, 
  title: "app",
  icon:"",
  _focus: false,           // on the top of others

@@ -36,7 +36,7 @@ var _this = {
         file._openedApp = app;
     },
     switchApp:function (app) {
-        app.showUp();
+        app.show();
         $event.emit('app:switch',app);
     },
     checkFocus:function (app) {
