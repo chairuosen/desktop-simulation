@@ -43,7 +43,7 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  oldPosition: null,        // maximized need
  resizable:true,           // if user can resize the app window
  singleton:false,          // only one instance
- closed:false               
+ _close:false                
  ```
  
  Icon data example:

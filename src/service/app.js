@@ -21,7 +21,7 @@ function App(o) {
         oldPosition: null,
         resizable:true,
         singleton:false,
-        closed:false
+        _close:false
     };
     $.each(o,function (k,v) {
         if(typeof v == 'function'){
@@ -58,13 +58,17 @@ App.prototype.hide = function () {
 };
 
 App.prototype.close = function () {
-    this.closed = true;
-    $event.emit('app:close',this);
+    if(!this._close){
+        this._close = true;
+        $event.emit('app:close',this);
+    }
 }
 
 App.prototype.focus = function () {
-    this._focus = true;
-    $event.emit('app:focus',this);
+    if(!this._focus){
+        this._focus = true;
+        $event.emit('app:focus',this);
+    }
 }
 
 App.prototype.blur = function () {

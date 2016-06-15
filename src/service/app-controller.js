@@ -5,7 +5,7 @@ var _this = {
         if(this.apps.indexOf(app)==-1){
             this.apps.push(app);
         }
-        this.switchApp(app);
+        app.show();
     },
     openFile:function (file) {
         var options = {
@@ -20,7 +20,7 @@ var _this = {
             $.extend(options,file.options)
         }
 
-        if(file._openedApp && file._openedApp.closed){
+        if(file._openedApp && file._openedApp._close){
             file._openedApp = null;
         }
         var App = require('service/app').App;
@@ -33,11 +33,9 @@ var _this = {
         this.openApp(app);
 
         file.selected = false;
-        file._openedApp = app;
-    },
-    switchApp:function (app) {
-        app.show();
-        $event.emit('app:switch',app);
+        if(app.singleton){
+            file._openedApp = app;
+        }
     },
     checkFocus:function (app) {
         this.apps.sort(function (a,b) {
@@ -56,11 +54,8 @@ var _this = {
         });
     },
     checkClose:function () {
-        // this.apps = this.apps.filter(function (a) {
-        //     return !a.closed;
-        // });
         var closedApp =  this.apps.filter(function (a) {
-            return a.closed;
+            return a._close;
         });
         var index = this.apps.indexOf(closedApp[0]);
         this.apps.splice(index,1);
