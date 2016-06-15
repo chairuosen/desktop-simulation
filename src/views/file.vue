@@ -1,76 +1,26 @@
 <style lang="less" rel="stylesheet/less">
-    .file-item {
-        position:absolute;
-        /*border:1px dashed #fff;*/
-        &.selected{
-            .file-body{
-                /*border:2px solid rgba(43, 115, 199, 0.36);*/
-                /*background:rgba(43, 115, 199, 0.2);*/
-                background: rgba(0, 134, 255, 0.27);
-            }
-        }
-        .file-body{
-            /*border:2px solid transparent;*/
-            border-radius:4px;
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform:translateX(-50%) translateY(-50%);
-            width:90px;
-            .icon{
-                height:80px;
-                width:100%;
-                margin:0 auto;
-                background-size:64px;
-            }
-            .text{
-                min-height:20px;
-                line-height:20px;
-                text-align:center;
-                /*margin:0 -10px; */
-                overflow: hidden;
-                word-wrap: break-word;
-                word-break: break-all;
-                text-overflow: ellipsis;
-                padding-bottom:5px;
-            }
-        }
-    }
+
 </style>
 <template>
     <div class="file-section">
-        <div class="file-item" v-for="item in files"
-             :class="{selected:item.selected}"
-             :style="{
+
+        <file
+                v-for="file in files"
+                :file.sync="file"
+                :select="select"
+                :dragstart="dragstart"
+                :style="{
                 height:option.cell.height+'px',
                 width:option.cell.width+'px',
-                top:item.y*option.cell.height +'px',
-                left:item.x*option.cell.width +'px'
-             }"
-             @mousedown="mousedownOnFileItem($event);"
-             @contextmenu="contextmenuOnFileItem($event,item)"
-        >
-            <div class="file-body"
-                 @click="select(item)"
-                 @dblclick="openFile(item)"
-                 @dragstart="dragstart($event,item)"
-                 draggable="true"
-            >
-                <div class="icon {{item.icon}}">
-
-                </div>
-                <div class="text">
-                    {{item.name}}
-                </div>
-            </div>
-        </div>
+                top:file.y*option.cell.height +'px',
+                left:file.x*option.cell.width +'px'
+                }"
+        ></file>
     </div>
 </template>
 
 <script>
-    var App = require('service/app').App;
     var util = require('service/util');
-    var appController = require('service/app-controller');
 
     var option = {
         cell:{
@@ -109,30 +59,28 @@
 
     module.exports = {
         props:{
-            apps:Array
+            apps:Array,
+            files:Array
         },
         data: function () {
             return {
                 option:option,
                 clipboard:[],
-                draggingItem:null,
-                files:require('data/files.js').map(function (item,index) {
-                    item.x = Math.floor(index/maxRow);
-                    item.y = index%maxRow;
-                    item.selected = false;
-                    return item;
-                })
+                draggingItem:null
             }
         },
         methods: {
-            openFile:function (file) {
-                appController.openFile(file);
+            sortFile:function (files) {
+                files.forEach(function(file,index){
+                    file.x = Math.floor(index/maxRow);
+                    file.y = index%maxRow;
+                })
             },
-            select:function (item) {
+            select:function (file) {
                 if( !commandKeyPressed ){
                     this.clearSelect();
                 }
-                item.selected = !item.selected;
+                file.select();
             },
             selectAll:function () {
                 this.files.forEach(function (a) {
@@ -177,32 +125,23 @@
                         count++;
                     }
                 }
-            },
-            mousedownOnFileItem:function (e) {
-                if ( $(e.target).is('.file-item') && e.button==0 ){
-                    $event.emit('mousedown:file',{x:e.clientX,y:e.clientY})
-                }
-            },
-            contextmenuOnFileItem:function (e,item) {
-                if ( $(e.target).is('.file-item') ){
-                    $event.emit('contextmenu:wallpaper',{x:e.clientX,y:e.clientY})
-                }else{
-                    if( !item.selected ){
-                        this.clearSelect();
-                        item.selected = true;
-                    }
-                    $event.emit('contextmenu:file',{x:e.clientX,y:e.clientY,file:item})
-                }
             }
         },
-        components: {},
+        components: {
+            file:require('components/file-item.vue')
+        },
         ready: function () {
-
-//            this.openFile(this.files[3]);
+            this.sortFile(this.files);
 
             var vm = this;
             $event.on('mousedown:wallpaper',function () {
                 vm.clearSelect();
+            });
+            $event.on('contextmenu:file',function (data) {
+                if( !data.file.selected ){
+                    vm.clearSelect();
+                    data.file.selected = true;
+                }
             });
             $event.on('drop:wallpaper',function (data) {
                 var targetPosition = getParsedXY(data.x,data.y);
@@ -212,19 +151,19 @@
             });
             $event.on('open:menu',function () {
                 vm.getSelectedFiles().forEach(function (file) {
-                    appController.openFile(file);
+                    file.open();
                 })
             });
             $event.on('copy:keyboard copy:menu',function () {
                 vm.clipboard = vm.getSelectedFiles().map(function (a) {
-                    var b = util.clone(a);
+                    var b = a.clone();
                     b.copy = true;
                     return b;
                 });
             });
             $event.on('cut:keyboard cut:menu',function () {
                 vm.clipboard = vm.getSelectedFiles().map(function (a) {
-                    var b = util.clone(a);
+                    var b = a.clone();
                     a.deleted = true;
                     return b;
                 });

@@ -38,14 +38,54 @@
     }
 </style>
 <template>
-    
+    <div class="file-item"
+         :class="{selected:file.selected}"
+
+         @mousedown="mousedownOnFileItem($event);"
+         @contextmenu="contextmenuOnFileItem($event,file)"
+    >
+        <div class="file-body"
+             @click="select(file)"
+             @dblclick="file.open()"
+             @dragstart="dragstart($event,file)"
+             draggable="true"
+        >
+            <div class="icon {{file.icon}}">
+
+            </div>
+            <div class="text">
+                {{file.name}}
+            </div>
+        </div>
+    </div>
 </template>
 <script>
+    var util = require('service/util');
+    var appController = require('service/app-controller');
+
     module.exports = {
+        props:{
+            file:Object,
+            select:Function,
+            dragstart:Function
+        },
         data: function () {
             return {}
         },
-        methods: {},
+        methods: {
+            mousedownOnFileItem:function (e) {
+                if ( $(e.target).is('.file-item') && e.button==0 ){
+                    $event.emit('mousedown:file',{x:e.clientX,y:e.clientY})
+                }
+            },
+            contextmenuOnFileItem:function (e,file) {
+                if ( $(e.target).is('.file-item') ){
+                    $event.emit('contextmenu:wallpaper',{x:e.clientX,y:e.clientY})
+                }else{
+                    $event.emit('contextmenu:file',{x:e.clientX,y:e.clientY,file:file})
+                }
+            }
+        },
         components: {},
         ready: function () {
 

@@ -1,6 +1,12 @@
 var util = require('service/util');
+var App = require('service/app');
+var File = require('service/file');
+
 var _this = {
     apps:[],
+    files:require('data/files.js').map(function(a){
+        return new File(a);
+    }),
     openApp:function (app) {
         if(this.apps.indexOf(app)==-1){
             this.apps.push(app);
@@ -23,7 +29,6 @@ var _this = {
         if(file._openedApp && file._openedApp._close){
             file._openedApp = null;
         }
-        var App = require('service/app').App;
         var app = new App(options);
 
         if(app.singleton && file._openedApp){

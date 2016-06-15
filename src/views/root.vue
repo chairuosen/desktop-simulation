@@ -4,7 +4,7 @@
 <template>
     <div class="root">
         <wallpaper class="scope"></wallpaper>
-        <file class="scope" :apps.sync="apps"></file>
+        <file class="scope" :apps.sync="apps" :files.sync="files"></file>
         <selection class="scope"></selection>
         <application class="scope" :apps.sync="apps"></application>
         <taskbar class="scope" :apps.sync="apps"></taskbar>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    var apps = require('service/app-controller').apps;
+    var appController = require('service/app-controller');
 
     require('service/keyboard').init();
     require('service/global-var');
@@ -23,7 +23,8 @@
         },
         data:function () {
             return {
-                apps:apps
+                apps:appController.apps,
+                files:appController.files
             }
         },
         replace: false,

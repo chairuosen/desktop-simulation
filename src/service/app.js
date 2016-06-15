@@ -115,6 +115,4 @@ App.prototype.maximize = function () {
     }
 }
 
-module.exports = {
-    App:App
-}
+module.exports = App
