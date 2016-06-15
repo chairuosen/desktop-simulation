@@ -35,7 +35,7 @@ function App(o) {
 }
 
 App.prototype.set = function (key,value) {
-    var isResize = ['height','width'].indexOf(key)>=0;
+    var isResize = ['height','width','top','left'].indexOf(key)>=0;
     if(isResize){
         this.maximized = false;
 
