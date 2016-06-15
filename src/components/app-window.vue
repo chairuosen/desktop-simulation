@@ -1,7 +1,6 @@
 <style lang="less" rel="stylesheet/less">
     @import "../global";
     .app{
-        position:absolute;
         background:#fff;
         border-radius:5px;
         overflow:hidden;
@@ -158,8 +157,6 @@
                 animating:app.animating
                 }"
             :style="{
-                top:app.top+'px',
-                left:app.left+'px',
                 width:app.width+'px',
                 height:app.height+30+'px'
                 }"
