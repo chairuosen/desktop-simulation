@@ -3,7 +3,8 @@
     .taskbar-section{
         width:100%;
         height:@h;
-        background:#444;
+        border-top:1px solid #eee;
+        background:#fff;
         position:absolute;
         bottom:0;
         top:auto !important;
@@ -20,11 +21,11 @@
             padding:0 20px 0 15px;
             text-align:center;
             line-height:@h;
-            color:#999;
-            background:#505050;
-            margin-right:2px;
+            color:#fff;
+            background:#ccc;
+            margin-right:0px;
             &.actived{
-                background:#333;
+                background:#4b8de4;
                 color:#fff;
             }
             .icon{
