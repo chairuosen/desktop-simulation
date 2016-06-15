@@ -19,9 +19,16 @@
     .button{
         text-align:center;
         border:1px solid #eee;
+        &:active{
+            background:#eee;
+        }
         &.f{
             background:@blue;
+            border:none;
             color:#fff;
+            &:active{
+                background:darken(@blue,5%);
+            }
         }
     }
 </style>
@@ -141,15 +148,19 @@
                 }else if(key[1] === symbol.EQU){
                     if(this.computeSymbol){
                         var action = this.computeSymbol[1];
-                        this.currentValue = computer[action](this.lastValue,this.currentValue);
+                        if(this.lastValue!=="" && this.currentValue!==""){
+                            this.currentValue = computer[action](this.lastValue,this.currentValue);
+                        }
                     }
                     this.computeSymbol = "";
                     this.clearInNextAction = true;
                 }else{
                     if(this.computeSymbol){
                         var action = this.computeSymbol[1];
-                        this.currentValue = computer[action](this.lastValue,this.currentValue);
-                        this.lastValue = this.currentValue;
+                        if(this.lastValue!=="" && this.currentValue!==""){
+                            this.currentValue = computer[action](this.lastValue,this.currentValue);
+                            this.lastValue = this.currentValue;
+                        }
                     }else{
                         this.lastValue = this.currentValue;
                     }
