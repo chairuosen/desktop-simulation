@@ -9,7 +9,7 @@ function App(o) {
         show: true,
         title: "app",
         icon:"",
-        actived: false,
+        focus: false,
         type: null,
         top: 100 + count * 2,
         left: 100 + count * 2,
@@ -44,7 +44,7 @@ App.prototype.set = function (key,value) {
 
 App.prototype.hide = function () {
     this.show = false;
-    this.actived = false;
+    this.focus = false;
 };
 
 App.prototype.close = function () {

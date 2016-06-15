@@ -8,7 +8,8 @@
         <menu
                 v-if="menu.data && menu.data.length"
                 class="context-menu"
-                :data.sync="menu.data",
+                :data.sync="menu.data"
+                :file="menu.file"
                 :style="{
                     top:menu.position.y+'px',
                     left:menu.position.x+'px'
@@ -23,6 +24,7 @@
             return {
                 menu:{
                     position:{},
+                    file:null,
                     data:null
                 }
             }
@@ -33,17 +35,19 @@
         },
         ready: function () {
             var vm = this;
-            $event.on('contextmenu:file',function (e,data) {
+            $event.on('contextmenu:file',function (data) {
 //                console.log('file menu',data);
                 vm.menu.data = menuData.file;
-                vm.menu.position = data;
+                vm.menu.file = data.file;
+                vm.menu.position = {x:data.x,y:data.y};
             });
-            $event.on('contextmenu:wallpaper',function (e,data) {
+            $event.on('contextmenu:wallpaper',function (data) {
 //                console.log('desktop menu');
                 vm.menu.data = menuData.wallpaper;
-                vm.menu.position = data;
+                vm.menu.file = null;
+                vm.menu.position = {x:data.x,y:data.y};
             });
-            $event.on('mousedown:wallpaper',function (e,data) {
+            $event.on('mousedown:wallpaper',function (data) {
                 vm.menu.data = null;
             });
             var pasteOption = menuData.wallpaper.filter(function (a) {

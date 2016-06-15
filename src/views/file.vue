@@ -52,7 +52,7 @@
         >
             <div class="file-body"
                  @click="select(item)"
-                 @dblclick="openApp(item)"
+                 @dblclick="openFile(item)"
                  @dragstart="dragstart($event,item)"
                  draggable="true"
             >
@@ -124,30 +124,8 @@
             }
         },
         methods: {
-            openApp:function (file) {
-                var options = {
-                    title:file.name,
-                    type:file.app,
-                    icon:file.icon
-                };
-                if(file.options){
-                    $.extend(options,file.options)
-                }
-
-                if(file._openedApp && file._openedApp.closed){
-                    file._openedApp = null;
-                }
-
-                var app = new App(options);
-
-                if(app.singleton && file._openedApp){
-                    app = file._openedApp;
-                }
-
-                appController.openApp(app);
-
-                file.selected = false;
-                file._openedApp = app;
+            openFile:function (file) {
+                appController.openFile(file);
             },
             select:function (item) {
                 if( !commandKeyPressed ){
@@ -158,6 +136,11 @@
             selectAll:function () {
                 this.files.forEach(function (a) {
                     a.selected = true;
+                })
+            },
+            getSelectedFiles:function () {
+                return this.files.filter(function (a) {
+                    return a.selected;
                 })
             },
             dragstart:function (e,item) {
@@ -207,35 +190,36 @@
                         this.clearSelect();
                         item.selected = true;
                     }
-                    $event.emit('contextmenu:file',{x:e.clientX,y:e.clientY})
+                    $event.emit('contextmenu:file',{x:e.clientX,y:e.clientY,file:item})
                 }
             }
         },
         components: {},
         ready: function () {
             var vm = this;
-            $event.on('mousedown:wallpaper',function (e,data) {
+            $event.on('mousedown:wallpaper',function () {
                 vm.clearSelect();
             });
-            $event.on('drop:wallpaper',function (e,data) {
+            $event.on('drop:wallpaper',function (data) {
                 var targetPosition = getParsedXY(data.x,data.y);
                 vm.draggingItem.x = targetPosition.x;
                 vm.draggingItem.y = targetPosition.y;
                 vm.draggingItem = null;
             });
+            $event.on('open:menu',function () {
+                vm.getSelectedFiles().forEach(function (file) {
+                    appController.openFile(file);
+                })
+            });
             $event.on('copy:keyboard copy:menu',function () {
-                vm.clipboard = vm.files.filter(function (a) {
-                    return a.selected;
-                }).map(function (a) {
-                    var b = util.clone(a)
+                vm.clipboard = vm.getSelectedFiles().map(function (a) {
+                    var b = util.clone(a);
                     b.copy = true;
                     return b;
                 });
             });
             $event.on('cut:keyboard cut:menu',function () {
-                vm.clipboard = vm.files.filter(function (a) {
-                    return a.selected;
-                }).map(function (a) {
+                vm.clipboard = vm.getSelectedFiles().map(function (a) {
                     var b = util.clone(a);
                     a.deleted = true;
                     return b;
@@ -273,7 +257,7 @@
                 });
             });
             
-            $event.on('selection:mouse-action',function (e,data) {
+            $event.on('selection:mouse-action',function (data) {
                 var a = getParsedXY(data.topLeft.x,data.topLeft.y,true);
                 var b = getParsedXY(data.bottomRight.x,data.bottomRight.y,true);
                 var yRange = [a.y,b.y];

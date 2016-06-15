@@ -60,7 +60,7 @@
         },
         ready: function () {
             var vm = this;
-            $event.on('mousedown:file mousedown:wallpaper',function (e,data) {
+            $event.on('mousedown:file mousedown:wallpaper',function (data) {
                 vm.selection.startSelection = true;
                 vm.selection.startPosition = {x:data.x,y:data.y};
                 vm.selection.currentPosition = {x:data.x,y:data.y}

@@ -33,7 +33,7 @@
 
             }
         }
-        &.actived{
+        &.focus{
             box-shadow:0 5px 35px rgba(0, 0, 0, 0.6);
             .app-title{
                 background:#e7eeff;
@@ -158,7 +158,7 @@
                 class="app"
                 v-show="app.show"
                 :class="{
-                actived:app.actived,
+                focus:app.focus,
                 animating:app.animating
                 }"
                 :style="{
@@ -288,7 +288,7 @@
                 });
                 vm.switchApp(vm.apps[0]);
             }
-            $event.on('app:switch',function (e,app) {
+            $event.on('app:switch',function (app) {
                 vm.current.app = app;
             });
 

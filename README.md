@@ -31,7 +31,7 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  show: true, 
  title: "app",
  icon:"",
- actived: false,           // on the top of others
+ focus: false,           // on the top of others
  type: null,                // app component's name
  top: 100 + count * 2,
  left: 100 + count * 2,

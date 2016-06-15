@@ -1,6 +1,14 @@
 module.exports = {
     file:[
         {
+            text:"打开",
+            type:"open",
+            disabled:false,
+            callback:function () {
+                $event.emit('open:menu')
+            }
+        },
+        {
             text:"复制",
             type:"copy",
             disabled:false,

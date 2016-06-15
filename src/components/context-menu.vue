@@ -42,7 +42,8 @@
 <script>
     module.exports = {
         props:{
-            "data":true
+            data:Array,
+            file:Object
         },
         data: function () {
             return {}
@@ -51,7 +52,7 @@
             click:function (item) {
                 if(item.disabled) return;
                 if(item.callback){
-                    item.callback();
+                    item.callback(this.file);
                 }
                 this.data = null;
             }

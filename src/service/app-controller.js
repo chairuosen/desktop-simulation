@@ -8,6 +8,31 @@ var _this = {
         }
         this.switchApp(app);
     },
+    openFile:function (file) {
+        var options = {
+            title:file.name,
+            type:file.app,
+            icon:file.icon
+        };
+        if(file.options){
+            $.extend(options,file.options)
+        }
+
+        if(file._openedApp && file._openedApp.closed){
+            file._openedApp = null;
+        }
+
+        var app = new App(options);
+
+        if(app.singleton && file._openedApp){
+            app = file._openedApp;
+        }
+
+        this.openApp(app);
+
+        file.selected = false;
+        file._openedApp = app;
+    },
     switchApp:function (app) {
         app.show = true;
         // var otherApps = this.apps.filter(function (a) {
@@ -18,17 +43,17 @@ var _this = {
         // otherApps.push(app);
         // this.apps = otherApps;
 
-        app.actived = true;
+        app.focus = true;
         this.apps.sort(function (a,b) {
-            a.actived = false;
-            b.actived = false;
+            a.focus = false;
+            b.focus = false;
 
             if(a===app){
-                a.actived = true;
+                a.focus = true;
                 return 1;
             }
             if(b===app){
-                b.actived = true;
+                b.focus = true;
                 return -1;
             }
             return 0;
