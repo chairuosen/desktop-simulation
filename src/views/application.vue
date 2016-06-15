@@ -280,7 +280,6 @@
         ready: function () {
             var vm = this;
             var $w = $(window);
-            var outside = false;
 
             if( vm.apps && vm.apps.length ){
                 vm.apps.sort(function (a,b) {
@@ -295,54 +294,35 @@
             $w.on('mousemove',function (e) {
                 var app = vm.current.app;
 
+                var height,width;
                 if(vm.current.drag){
-//                    if(outside){
-//                        vm.current.drag = false;
-//                        outside = false;
-//                        return;
-//                    }
                     var y = e.clientY - vm.current.drag.y;
                     var x = e.clientX - vm.current.drag.x;
                     app.top = Math.min(Math.max(0,y),window._h-app.height);
                     app.left = Math.min(Math.max(0,x),window._w-app.width);
                 }
                 if(vm.current.resize.bottom){
-                    if(outside){
-                        vm.current.resize.bottom = false;
-                        outside = false;
-                        return;
-                    }
-                    var height = e.clientY - vm.current.resize.bottom.d - app.top;
-                    app.set('height',Math.max(Math.min(height,window._h),appWindowMinHeight));
+                    height = e.clientY - vm.current.resize.bottom.d - app.top;
                 }
 
                 if(vm.current.resize.right){
-                    if(outside){
-                        vm.current.resize.right = false;
-                        outside = false;
-                        return;
-                    }
-                    var width = e.clientX - vm.current.resize.right.d - app.left;
-                    app.set('width',Math.max(Math.min(width,window._w),appWindowMinWidth));
+                    width = e.clientX - vm.current.resize.right.d - app.left;
                 }
 
                 if(vm.current.resize.both){
-                    if(outside){
-                        vm.current.resize.both = false;
-                        outside = false;
-                        return;
-                    }
-                    var height = e.clientY - vm.current.resize.both.dy - app.top;
-                    var width = e.clientX - vm.current.resize.both.dx - app.left;
-                    app.set('height',Math.max(Math.min(height,window._h),appWindowMinHeight));
-                    app.set('width',Math.max(Math.min(width,window._w),appWindowMinWidth));
+                    height = e.clientY - vm.current.resize.both.dy - app.top;
+                    width = e.clientX - vm.current.resize.both.dx - app.left;
                 }
 
-                if(e.clientY>window._h || e.clientX > window._w || e.clientY<0 || e.clientX <0){
-                    outside = true;
-                }else{
-                    outside = false;
+                if(height){
+                    var maxHeight = window._h - app.top;
+                    app.set('height',Math.max(Math.min(height,maxHeight),appWindowMinHeight));
                 }
+                if(width){
+                    var maxWidth = window._w - app.left;
+                    app.set('width',Math.max(Math.min(width,maxWidth),appWindowMinWidth));
+                }
+
             }).on('mouseup',vm.mouseup);
         }
     };
