@@ -1,41 +1,5 @@
 <style lang="less" rel="stylesheet/less">
-    *{
-        margin:0;
-        padding:0;
-        border:none;
-        box-sizing:border-box;
-        -webkit-user-select:none;
-    }
-    html,body{
-        height:100%;
-        width:100%;
-        overflow:hidden;
-    }
-    .root{
-        height:100%;
-        width:100%;
-        position:relative;
-        .scope{
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-        }
-    }
-
-    .icon{
-        background:url(../images/file.png) no-repeat center center;
-        &.firefox{
-            background-image:url(../images/firefox.png);
-        }
-        &.chrome{
-            background-image:url(../images/chrome.png);
-        }
-        &.safari{
-            background-image:url(../images/safari.png);
-        }
-    }
-
+    @import "../main";
 </style>
 <template>
     <div class="root">
