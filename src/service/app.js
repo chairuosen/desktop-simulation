@@ -10,6 +10,7 @@ function App(o) {
         title: "app",
         icon:"",
         _focus: false,
+        titleHeight:30,
         type: null,
         top: 100 + count * 5,
         left: 100 + count * 5,

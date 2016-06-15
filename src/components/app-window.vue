@@ -337,7 +337,7 @@
             function onDrag(e){
                 var y = e.clientY - vm.drag.y;
                 var x = e.clientX - vm.drag.x;
-                app.top = Math.min(Math.max(0,y),window._h-app.height);
+                app.top = Math.min(Math.max(0,y),window._h-app.height-app.titleHeight);
                 app.left = Math.min(Math.max(0,x),window._w-app.width);
             }
 
@@ -353,12 +353,14 @@
                 }
 
                 if(height){
-                    var maxHeight = window._h - app.top;
-                    app.set('height',Math.max(Math.min(height,maxHeight),appWindowMinHeight));
+                    var maxHeight = window._h - app.top - app.titleHeight;
+                    height = Math.max(Math.min(height,maxHeight),appWindowMinHeight);
+                    app.set('height',height);
                 }
                 if(width){
                     var maxWidth = window._w - app.left;
-                    app.set('width',Math.max(Math.min(width,maxWidth),appWindowMinWidth));
+                    width = Math.max(Math.min(width,maxWidth),appWindowMinWidth);
+                    app.set('width',width);
                 }
             }
 
