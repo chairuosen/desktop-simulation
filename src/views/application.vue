@@ -38,7 +38,7 @@
         &.focus{
             box-shadow:0 10px 35px rgba(0, 0, 0, 0.6);
             .app-title{
-                background:#e7eeff;
+                background:#F5F8FF;
                 color:#333;
                 .Filter(saturate(1.2));
             }
