@@ -56,7 +56,8 @@ module.exports = [
         options: {
             resizable:false,
             width:400,
-            height:400
+            height:400,
+            left:400
         }
     },
     {

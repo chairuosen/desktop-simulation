@@ -196,6 +196,9 @@
         },
         components: {},
         ready: function () {
+
+            this.openFile(this.files[3]);
+
             var vm = this;
             $event.on('mousedown:wallpaper',function () {
                 vm.clearSelect();
