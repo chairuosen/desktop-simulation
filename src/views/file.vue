@@ -4,13 +4,14 @@
         /*border:1px dashed #fff;*/
         &.selected{
             .file-body{
-                border:2px solid rgba(43, 115, 199, 0.36);
-                background:rgba(43, 115, 199, 0.2);
+                /*border:2px solid rgba(43, 115, 199, 0.36);*/
+                /*background:rgba(43, 115, 199, 0.2);*/
+                background: rgba(0, 134, 255, 0.27);
             }
         }
         .file-body{
-            border:2px solid transparent;
-            border-radius:3px;
+            /*border:2px solid transparent;*/
+            border-radius:4px;
             position:absolute;
             top:50%;
             left:50%;
