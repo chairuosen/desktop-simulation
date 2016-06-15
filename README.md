@@ -53,12 +53,14 @@ Demo: http://demo.ruosen.io/desktop-simulation/
      name:"Firefox",
      app:"browser", // app component's name
      icon:"firefox", // defined in css .icon
-     options:{      // options will be extended to App Class's instance
+     options:{      // options will be extended to App Class's instance , it can be a function that returns options object
          data:{  
              index:"http://qq.com" 
          },
-         singleton:true
-         // resizable:false
+         singleton:true,
+         width: function () {  // value can be a function that returns dynamic value; 
+             return $(window).width() * 0.8;
+         }
      }
  }, 
  ```

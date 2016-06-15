@@ -15,6 +15,9 @@ var _this = {
             icon:file.icon
         };
         if(file.options){
+            if(typeof file.options == 'function'){
+                file.options = file.options();
+            }
             $.extend(options,file.options)
         }
 

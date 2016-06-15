@@ -11,10 +11,10 @@ function App(o) {
         icon:"",
         focus: false,
         type: null,
-        top: 100 + count * 2,
-        left: 100 + count * 2,
-        height: window._h*0.8,
-        width: window._w*0.8,
+        top: 100 + count * 5,
+        left: 100 + count * 5,
+        height: 400,
+        width: 600,
         data:null,
         animating:false,
         maximized: false,
@@ -23,6 +23,11 @@ function App(o) {
         singleton:false,
         closed:false
     };
+    $.each(o,function (k,v) {
+        if(typeof v == 'function'){
+            o[k] = v();
+        }
+    });
     $.extend(_default,o);
     $.extend(this,_default);
 
