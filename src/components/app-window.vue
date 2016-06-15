@@ -122,8 +122,6 @@
         @reactionWidth:4px;
         .resize-handle{
             position:absolute;
-            right:0;
-            bottom:0;
         }
         .resize-overlay{
             position:absolute;
@@ -132,20 +130,61 @@
             height:100%;
             width:100%;
         }
-        .resize-handle-right{
+        .resize-handle-r{
+            right:0;
+            bottom:0;
             height:100%;
             width:@reactionWidth;
             cursor: e-resize;
         }
-        .resize-handle-bottom{
+        .resize-handle-b{
+            right:0;
+            bottom:0;
             width:100%;
             height:@reactionWidth;
             cursor: s-resize;
         }
-        .resize-handle-both{
+        .resize-handle-l{
+            left:0;
+            top:0;
+            height:100%;
+            width:@reactionWidth;
+            cursor: w-resize;
+        }
+        .resize-handle-t{
+            left:0;
+            top:0;
+            width:100%;
+            height:@reactionWidth;
+            cursor: n-resize;
+        }
+        .resize-handle-br{
+            right:0;
+            bottom:0;
             width:@reactionWidth*2;
             height:@reactionWidth*2;
             cursor:se-resize;
+        }
+        .resize-handle-bl{
+            left:0;
+            bottom:0;
+            width:@reactionWidth*2;
+            height:@reactionWidth*2;
+            cursor:sw-resize;
+        }
+        .resize-handle-tr{
+            top:0;
+            right:0;
+            width:@reactionWidth*2;
+            height:@reactionWidth*2;
+            cursor:ne-resize;
+        }
+        .resize-handle-tl{
+            top:0;
+            left:0;
+            width:@reactionWidth*2;
+            height:@reactionWidth*2;
+            cursor:nw-resize;
         }
     }
 </style>
@@ -184,28 +223,18 @@
         <div class="app-body" :style="{height:app.height+'px'}">
             <component  :is="app.type" :app.sync="app"></component>
         </div>
-        <div class="resize-overlay" v-show="drag || resize.bottom || resize.right || resize.both"></div>
+        <div class="resize-overlay" v-show="overlayShow"></div>
         <div
+                v-for="dir in resizeDirection"
                 v-show="app.resizable"
-                class="resize-handle resize-handle-right"
-                @mousedown="resizeRightMousedown(app,$event)"
-        ></div>
-        <div
-                v-show="app.resizable"
-                class="resize-handle resize-handle-bottom"
-                @mousedown="resizeBottomMousedown(app,$event)"
-        ></div>
-        <div
-                v-show="app.resizable"
-                class="resize-handle resize-handle-both"
-                @mousedown="resizeBothMousedown(app,$event)"
+                class="resize-handle resize-handle-{{dir}}"
+                @mousedown="resizeHandler(dir,$event)"
         ></div>
     </div>
 </template>
 <script>
     var appWindowMinWidth = 400;
     var appWindowMinHeight = 200;
-
 
     module.exports = {
         props:{
@@ -215,10 +244,23 @@
             return {
                 drag:false,
                 resize:{
-                    right:false,
-                    bottom:false,
-                    both:false
-                }
+                    r:false,
+                    b:false,
+                    t:false,
+                    l:false
+                },
+                resizeDirection:['t','b','l','r','tl','tr','bl','br']
+            }
+        },
+        computed:{
+            overlayShow:function () {
+                var resizing = false;
+                $.each(this.resize,function (k,v) {
+                    if(v){
+                        resizing = true;
+                    }
+                })
+                return this.drag || resizing;
             }
         },
         methods: {
@@ -233,24 +275,10 @@
             },
             mouseup:function () {
                 this.drag = false;
-                this.resize.right = false;
-                this.resize.bottom = false;
-                this.resize.both = false;
-            },
-            resizeRightMousedown:function (app,e) {
-                app.show();
-                this.resize.right = {d:e.clientX-app.left-app.width};
-            },
-            resizeBottomMousedown:function (app,e) {
-                app.show();
-                this.resize.bottom = {d:e.clientY-app.top-app.height};
-            },
-            resizeBothMousedown:function (app,e) {
-                app.show();
-                this.resize.both = {
-                    dy:e.clientY-app.top-app.height,
-                    dx:e.clientX-app.left-app.width
-                }
+                var vm = this;
+                $.each(this.resize,function (k,v) {
+                    vm.resize[k] = false;
+                });
             },
             closeApp:function (app) {
                 app.close();
@@ -260,34 +288,65 @@
             },
             hideApp:function (app) {
                 app.hide();
+            },
+            resizeHandler:function (direction,event) {
+                var vm = this;
+                var app = vm.app;
+                app.show();
+                var fn = {
+                    r:function (e) {
+                        vm.resize.r = {d:e.clientX-app.left-app.width};
+                    },
+                    b:function (e) {
+                        vm.resize.b = {d:e.clientY-app.top-app.height};
+                    },
+                    l:function (e) {
+                        vm.resize.l = {
+                            d:e.clientX - app.left,      // distance of click and edge
+                            right:app.left+app.width
+                        };
+                    },
+                    t:function (e) {
+                        vm.resize.t ={
+                            d:e.clientY - app.top,
+                            bottom:app.top + app.height
+                        }
+                    },
+                };
+                var arr = direction.split('');
+                arr.forEach(function(dir){
+                    if(fn[dir]){
+                        fn[dir](event)
+                    }
+                })
             }
         },
         components: {},
         ready: function () {
             var vm = this;
             var $w = $(window);
+            var app = vm.app;
 
-            $w.on('mousemove',function (e) {
-                var app = vm.app;
+            function isset(n){
+                return typeof n !=='undefined';
+            }
 
+            function onDrag(e){
+                var y = e.clientY - vm.drag.y;
+                var x = e.clientX - vm.drag.x;
+                app.top = Math.min(Math.max(0,y),window._h-app.height);
+                app.left = Math.min(Math.max(0,x),window._w-app.width);
+            }
+
+            function onEasyResize(e){
                 var height,width;
-                if(vm.drag){
-                    var y = e.clientY - vm.drag.y;
-                    var x = e.clientX - vm.drag.x;
-                    app.top = Math.min(Math.max(0,y),window._h-app.height);
-                    app.left = Math.min(Math.max(0,x),window._w-app.width);
-                }
-                if(vm.resize.bottom){
-                    height = e.clientY - vm.resize.bottom.d - app.top;
+
+                if(vm.resize.b){
+                    height = e.clientY - vm.resize.b.d - app.top;
                 }
 
-                if(vm.resize.right){
-                    width = e.clientX - vm.resize.right.d - app.left;
-                }
-
-                if(vm.resize.both){
-                    height = e.clientY - vm.resize.both.dy - app.top;
-                    width = e.clientX - vm.resize.both.dx - app.left;
+                if(vm.resize.r){
+                    width = e.clientX - vm.resize.r.d - app.left;
                 }
 
                 if(height){
@@ -297,6 +356,64 @@
                 if(width){
                     var maxWidth = window._w - app.left;
                     app.set('width',Math.max(Math.min(width,maxWidth),appWindowMinWidth));
+                }
+            }
+
+            function onDamnItResize(e){
+                var height,width,top,left,right,bottom;
+
+                if(vm.resize.l){
+                    right = vm.resize.l.right;
+                    left = e.clientX - vm.resize.l.d;
+                    left = Math.max(left,0);
+                }
+                if(vm.resize.t){
+                    bottom = vm.resize.t.bottom;
+                    top = e.clientY - vm.resize.t.d;
+                    top = Math.max(top,0);
+                }
+
+
+                if(right && left){
+                    width = right - left;
+
+                    if(width<appWindowMinWidth){
+                        width = appWindowMinWidth;
+                        left = right - width;
+                    }
+                }
+
+                if(top && bottom){
+                    height = bottom - top;
+                    if(height < appWindowMinHeight){
+                        height = appWindowMinHeight;
+                        top = bottom - height;
+                    }
+                }
+
+
+                if(isset(left)){
+                    app.set('left',left);
+                }
+                if(isset(top)){
+                    app.set('top',top);
+                }
+
+                if(height){
+                    app.set('height',height);
+                }
+                if(width){
+                    app.set('width',width);
+                }
+            }
+
+            $w.on('mousemove',function (e) {
+
+                if(vm.drag){
+                    onDrag(e);
+                }else{
+                    onEasyResize(e);
+                    onDamnItResize(e);
                 }
 
             }).on('mouseup',vm.mouseup);
