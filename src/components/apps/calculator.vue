@@ -118,7 +118,7 @@
             buttonStyle:function () {
                 return {
                     width:this.app.width/4+'px',
-                    lineHeight:this.app.width/5+'px',
+                    lineHeight:this.app.height/5+'px',
                     height:this.app.height/5+'px'
                 }
             },
