@@ -67,7 +67,14 @@
             });
             $(window).on('mousemove',function (e) {
                 if(vm.selection.startSelection){
-                    vm.selection.currentPosition = {x:e.clientX,y:e.clientY};
+                    var x = e.clientX;
+                    var y = e.clientY;
+                    var maxX = window._w;
+                    var maxY = window._h;
+                    x = Math.min(maxX,x);
+                    y = Math.min(maxY,y);
+
+                    vm.selection.currentPosition = {x:x,y:y};
                 }
             })
             $(window).on('mouseup',function (e) {
