@@ -46,7 +46,7 @@
         <div class="app-list">
             <div
                     class="app-item"
-                    :class="{actived:app.actived}"
+                    :class="{actived:app.focus}"
                     v-for="app in sortedApps"
                     @click="click(app)"
             >
