@@ -68,6 +68,7 @@
 
 <script>
     var App = require('service/app').App;
+    var appController = require('service/app-controller');
 
     var option = {
         cell:{
@@ -142,7 +143,7 @@
                     app = file._openedApp;
                 }
 
-                $event.emit('app:open',app);
+                appController.openApp(app);
 
                 file.selected = false;
                 file._openedApp = app;

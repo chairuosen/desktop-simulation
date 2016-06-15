@@ -214,6 +214,8 @@
     var appWindowMinWidth = 400;
     var appWindowMinHeight = 200;
 
+    var appController = require('service/app-controller');
+
     var object = {
         props:{
             apps:true
@@ -234,15 +236,7 @@
         },
         methods: {
             switchApp:function (app) {
-                this.current.app = app;
-                app.show = true;
-                var otherApps = this.apps.filter(function (a) {
-                    a.actived = false;
-                    return a!==app;
-                });
-                app.actived = true;
-                otherApps.push(app);
-                this.apps = otherApps;
+                appController.switchApp(app);
             },
             appWindowMousedown:function (app,e) {
                 if( !$(e.target).is('.app-control *') ){
@@ -276,11 +270,6 @@
             closeApp:function (app) {
                 app.close();
             },
-            checkClose:function () {
-                this.apps = this.apps.filter(function (a) {
-                    return !a.closed;
-                });
-            },
             maxApp:function (app) {
                 this.switchApp(app);
                 app.maximize();
@@ -302,14 +291,7 @@
                 vm.switchApp(vm.apps[0]);
             }
             $event.on('app:switch',function (e,app) {
-                vm.switchApp(app);
-            });
-
-            $event.on('app:open',function (e,app) {
-                if(vm.apps.indexOf(app)==-1){
-                    vm.apps.push(app);
-                }
-                vm.switchApp(app);
+                vm.current.app = app;
             });
 
             $w.on('mousemove',function (e) {
@@ -364,10 +346,6 @@
                     outside = false;
                 }
             }).on('mouseup',vm.mouseup);
-            
-            $event.on('app:close',function () {
-                vm.checkClose();
-            })
         }
     };
 

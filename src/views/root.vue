@@ -48,8 +48,7 @@
 </template>
 
 <script>
-    var App = require('service/app').App;
-    var apps = [];
+    var apps = require('service/app-controller').apps;
 
     require('service/keyboard').init();
     require('service/global-var');

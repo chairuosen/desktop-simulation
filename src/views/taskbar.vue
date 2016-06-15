@@ -56,6 +56,7 @@
 </template>
 <script>
     var util = require('service/util');
+    var appController = require('service/app-controller');
 
     function getNewArray(arr) {
         var _arr=[];
@@ -86,7 +87,7 @@
                 if(app.actived){
                     app.hide();
                 }else{
-                    $event.emit('app:switch',app);
+                    appController.switchApp(app)
                 }
             }
         },
