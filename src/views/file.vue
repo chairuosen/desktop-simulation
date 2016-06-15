@@ -254,6 +254,7 @@
             $event.on('paste:keyboard paste:menu',function () {
                 var arr = vm.clipboard;
                 vm.clearSelect();
+                if(!arr || !arr.length)return;
                 vm.forEachGridEmptyPoint(function (x,y,index) {
                     var item = arr.shift();
                     item.x = x;
@@ -263,8 +264,6 @@
                         item.name = item.name + " (2)";
                     }
                     item.copy = false;
-
-                    console.log(item);
                     vm.files.push(item);
 
                     if(!arr.length){
