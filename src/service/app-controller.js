@@ -76,5 +76,10 @@ var _this = {
 $event.on('app:close',function () {
     _this.checkClose();
 });
+$event.on('mousedown:wallpaper',function () {
+    _this.apps.forEach(function (app) {
+        app.focus = false;
+    })
+})
 
 module.exports = _this;
