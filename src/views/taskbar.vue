@@ -96,7 +96,7 @@
                 if(app._focus){
                     app.hide();
                 }else{
-                    appController.switchApp(app)
+                    app.show();
                 }
             }
         },
