@@ -31,9 +31,9 @@ module.exports = [
                     index: "http://v2ex.com"
                 },
                 top: window._h * 0.1,
-                left: window._h * 0.1,
+                left: window._w * 0.1,
                 height: window._h * 0.8,
-                width: window._h * 0.8
+                width: window._w * 0.8
             }
         }
     },
