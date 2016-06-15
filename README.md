@@ -25,26 +25,27 @@ Demo: http://demo.ruosen.io/desktop-simulation/
  
  Write app component code in `src/components/apps/`, and add desktop icon data to `src/data/files.js`.
  
- <!--App Class:-->
- <!---->
- <!--```-->
- <!--_show: true, -->
- <!--title: "app",-->
- <!--icon:"",-->
- <!--_focus: false,           // on the top of others-->
- <!--type: null,                // app component's name-->
- <!--top: 100 + count * 2,-->
- <!--left: 100 + count * 2,-->
- <!--height: window._h*0.8,-->
- <!--width: window._w*0.8,-->
- <!--data:null,                 // app custom data-->
- <!--animating:false,-->
- <!--maximized: false,-->
- <!--oldPosition: null,        // maximized need-->
- <!--resizable:true,           // if user can resize the app window-->
- <!--singleton:false,          // only one instance-->
- <!--_close:false                -->
- <!--```-->
+<!-- App Class:
+ 
+ ```
+ _show: true, 
+ title: "app",
+ icon:"",
+ _focus: false,           // on the top of others
+ type: null,                // app component's name
+ top: 100 + count * 2,
+ left: 100 + count * 2,
+ height: window._h*0.8,
+ width: window._w*0.8,
+ data:null,                 // app custom data
+ animating:false,
+ maximized: false,
+ oldPosition: null,        // maximized need
+ resizable:true,           // if user can resize the app window
+ singleton:false,          // only one instance
+ _close:false                
+ ```
+ -->
  
  Component (*.vue) example:
  
