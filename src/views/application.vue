@@ -1,4 +1,5 @@
 <style lang="less" rel="stylesheet/less">
+    @import "../global";
     .app{
         position:absolute;
         background:#fff;
@@ -39,6 +40,9 @@
                 background:#e7eeff;
                 color:#333;
             }
+            .app-control{
+                .Filter(saturate(1.2));
+            }
         }
         .app-body{
 
@@ -49,6 +53,7 @@
             right:0;
             top:0;
             height:@titleHeight;
+            .Filter(saturate(0.5));
             .c{
                 display:block;
                 position:relative;
@@ -56,12 +61,7 @@
                 height:@titleHeight - 2*@margin;
                 margin:@margin @margin 0 0;
                 float:left;
-                &.disabled{
-                    background:#ccc;
-                    &:before,&:after{
-                        border-color:#ddd;
-                    }
-                }
+                border-radius:3px;
             }
             .c1{
                 background:#81C2D0;

@@ -1,10 +1,10 @@
 <style lang="less" rel="stylesheet/less">
+    @import "../global";
     @h:40px;
     .taskbar-section{
         width:100%;
         height:@h;
-        border-top:1px solid #eee;
-        background:#fff;
+        background:#f9f9f9;
         position:absolute;
         bottom:0;
         top:auto !important;
@@ -21,12 +21,20 @@
             padding:0 20px 0 15px;
             text-align:center;
             line-height:@h;
-            color:#fff;
-            background:#ccc;
-            margin-right:1px;
+            font-size:14px;
+            border-right:1px solid #e9e9e9;
+
+            /*color:#fff;*/
+            /*background:#ccc;*/
+            color:#aaa;
+            .Filter(saturate(0.2));
+
             &.actived{
-                background:#4b8de4;
-                color:#fff;
+                /*background:#4b8de4;*/
+                /*color:#fff;*/
+                color:@blue;
+                background:#fff;
+                .Filter(saturate(1));
             }
             .icon{
                 display:inline-block;

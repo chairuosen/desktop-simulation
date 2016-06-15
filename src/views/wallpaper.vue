@@ -3,7 +3,7 @@
         height:100%;
         /*background:url(../images/wall.jpg);*/
         /*background-size:cover;*/
-        background:#f3f3f3;
+        background:#eee;
     }
 </style>
 <template>
