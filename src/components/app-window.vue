@@ -253,14 +253,17 @@
             }
         },
         computed:{
-            overlayShow:function () {
+            isResizing:function () {
                 var resizing = false;
                 $.each(this.resize,function (k,v) {
                     if(v){
                         resizing = true;
                     }
                 })
-                return this.drag || resizing;
+                return resizing;
+            },
+            overlayShow:function () {
+                return this.drag || this.isResizing;
             }
         },
         methods: {
@@ -374,23 +377,21 @@
                 }
 
 
-                if(right && left){
+                if(right && isset(left)){
                     width = right - left;
-
                     if(width<appWindowMinWidth){
                         width = appWindowMinWidth;
                         left = right - width;
                     }
                 }
 
-                if(top && bottom){
+                if(isset(top) && bottom){
                     height = bottom - top;
                     if(height < appWindowMinHeight){
                         height = appWindowMinHeight;
                         top = bottom - height;
                     }
                 }
-
 
                 if(isset(left)){
                     app.set('left',left);
@@ -411,7 +412,7 @@
 
                 if(vm.drag){
                     onDrag(e);
-                }else{
+                }else if(vm.isResizing){
                     onEasyResize(e);
                     onDamnItResize(e);
                 }
