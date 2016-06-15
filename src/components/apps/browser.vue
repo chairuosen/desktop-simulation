@@ -89,7 +89,7 @@
                 <div class="browser-address-button" @click="go();">Go</div>
             </div>
         </header>
-        <section class="browser-body" :style="{height: app.height - 30 + 'px'}">
+        <section class="browser-body" :style="{height: app.height + 'px'}">
             <iframe v-el:iframe :src="src" name="test" height="100%" width="100%" frameborder="0"></iframe>
         </section>
     </div>

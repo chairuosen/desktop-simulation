@@ -23,7 +23,7 @@
             line-height:@h;
             color:#fff;
             background:#ccc;
-            margin-right:0px;
+            margin-right:1px;
             &.actived{
                 background:#4b8de4;
                 color:#fff;
@@ -46,7 +46,7 @@
         <div class="app-list">
             <div
                     class="app-item"
-                    :class="{actived:app.focus}"
+                    :class="{actived:app.isFocus()}"
                     v-for="app in sortedApps"
                     @click="click(app)"
             >
@@ -85,7 +85,7 @@
         },
         methods: {
             click:function (app) {
-                if(app.focus){
+                if(app.isFocus()){
                     app.hide();
                 }else{
                     appController.switchApp(app)

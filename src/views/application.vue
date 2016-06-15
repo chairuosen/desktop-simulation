@@ -158,14 +158,14 @@
                 class="app"
                 v-show="app.show"
                 :class="{
-                focus:app.focus,
+                focus:app.isFocus(),
                 animating:app.animating
                 }"
                 :style="{
                 top:app.top+'px',
                 left:app.left+'px',
                 width:app.width+'px',
-                height:app.height+'px'
+                height:app.height+30+'px'
                 }"
 
                 @mousedown="appWindowMousedown(app,$event)"
@@ -185,7 +185,7 @@
                     <span class="c c3" @mousedown="closeApp(app)"></span>
                 </div>
             </header>
-            <div class="app-body" :style="{height:app.height-30+'px'}">
+            <div class="app-body" :style="{height:app.height+'px'}">
                 <component  :is="app.type" :app.sync="app"></component>
             </div>
             <div class="resize-overlay" v-show="current.drag || current.resize.bottom || current.resize.right || current.resize.both"></div>

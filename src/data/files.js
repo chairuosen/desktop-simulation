@@ -50,6 +50,16 @@ module.exports = [
         }
     },
     {
+        name: "计算器",
+        app: "calculator",
+        icon: "",
+        options: {
+            resizable:false,
+            width:400,
+            height:400
+        }
+    },
+    {
         name: "自定义App",
         app: "custom-app",
         icon: "",

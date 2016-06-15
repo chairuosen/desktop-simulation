@@ -1,4 +1,3 @@
-var App = require('service/app').App;
 
 var _this = {
     apps:[],
@@ -24,7 +23,7 @@ var _this = {
         if(file._openedApp && file._openedApp.closed){
             file._openedApp = null;
         }
-
+        var App = require('service/app').App;
         var app = new App(options);
 
         if(app.singleton && file._openedApp){
@@ -37,31 +36,24 @@ var _this = {
         file._openedApp = app;
     },
     switchApp:function (app) {
-        // var otherApps = this.apps.filter(function (a) {
-        //     a.actived = false;
-        //     return a!==app;
-        // });
-        // app.actived = true;
-        // otherApps.push(app);
-        // this.apps = otherApps;
-
         app.showUp();
-        this.apps.sort(function (a,b) {
-            a.focus = false;
-            b.focus = false;
-
-            if(a===app){
-                a.focus = true;
-                return 1;
-            }
-            if(b===app){
-                b.focus = true;
-                return -1;
-            }
-            return 0;
-        })
-
         $event.emit('app:switch',app);
+    },
+    checkFocus:function (app) {
+        this.apps.sort(function (a,b) {
+            if(a===app){
+                b.blur();
+                return 1;
+            }else if(b===app){
+                a.blur();
+                return -1;
+            }else{
+                a.blur();
+                b.blur();
+                return 0;
+            }
+
+        });
     },
     checkClose:function () {
         // this.apps = this.apps.filter(function (a) {
@@ -78,9 +70,12 @@ var _this = {
 $event.on('app:close',function () {
     _this.checkClose();
 });
+$event.on('app:focus',function (app) {
+    _this.checkFocus(app);
+});
 $event.on('mousedown:wallpaper',function () {
     _this.apps.forEach(function (app) {
-        app.focus = false;
+        app._focus = false;
     })
 })
 

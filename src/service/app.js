@@ -9,7 +9,7 @@ function App(o) {
         show: true,
         title: "app",
         icon:"",
-        focus: false,
+        _focus: false,
         type: null,
         top: 100 + count * 5,
         left: 100 + count * 5,
@@ -49,18 +49,31 @@ App.prototype.set = function (key,value) {
 
 App.prototype.showUp = function () {
     this.show = true;
-    this.focus = true;
+    this.focus();
 }
 
 App.prototype.hide = function () {
     this.show = false;
-    this.focus = false;
+    this.blur();
 };
 
 App.prototype.close = function () {
     this.closed = true;
     $event.emit('app:close',this);
 }
+
+App.prototype.focus = function () {
+    this._focus = true;
+    $event.emit('app:focus',this);
+}
+
+App.prototype.isFocus = function () {
+    return this._focus;
+}
+
+App.prototype.blur = function () {
+    this._focus = false;
+};
 
 App.prototype.maximize = function () {
     var _this = this;
