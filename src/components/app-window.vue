@@ -249,6 +249,7 @@
                     t:false,
                     l:false
                 },
+                overlayShow:false,
                 resizeDirection:['t','b','l','r','tl','tr','bl','br']
             }
         },
@@ -261,9 +262,6 @@
                     }
                 })
                 return resizing;
-            },
-            overlayShow:function () {
-                return this.drag || this.isResizing;
             }
         },
         methods: {
@@ -420,6 +418,15 @@
                 }
 
             }).on('mouseup',vm.mouseup);
+            
+            vm.$watch(function () {
+                return vm.drag || vm.isResizing;
+            },function (val) {
+                $event.emit('overlay:show',val);
+            });
+            $event.on('overlay:show',function (val) {
+                vm.overlayShow = val;
+            });
 
         }
     }
