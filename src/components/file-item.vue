@@ -9,6 +9,9 @@
                 background: rgba(0, 134, 255, 0.27);
             }
         }
+        &.dragging{
+            opacity:0.6;
+        }
         .file-body{
             /*border:2px solid transparent;*/
             border-radius:4px;
@@ -39,7 +42,10 @@
 </style>
 <template>
     <div class="file-item"
-         :class="{selected:file.selected}"
+         :class="{
+         selected:file.selected,
+         dragging:dragging
+         }"
 
          @mousedown="mousedownOnFileItem($event);"
          @contextmenu="contextmenuOnFileItem($event,file)"
@@ -47,7 +53,8 @@
         <div class="file-body"
              @click="select(file)"
              @dblclick="file.open()"
-             @dragstart="dragstart($event,file)"
+             @dragstart="onDragstart($event,file);"
+             @dragend="onDragend();"
              draggable="true"
         >
             <div class="icon {{file.icon}}">
@@ -70,9 +77,18 @@
             dragstart:Function
         },
         data: function () {
-            return {}
+            return {
+                dragging:false
+            }
         },
         methods: {
+            onDragstart:function ($event,file) {
+                this.dragstart($event,file);
+                this.dragging = true;
+            },
+            onDragend:function () {
+                this.dragging = false;
+            },
             mousedownOnFileItem:function (e) {
                 if ( $(e.target).is('.file-item') && e.button==0 ){
                     $event.emit('mousedown:file',{x:e.clientX,y:e.clientY})
