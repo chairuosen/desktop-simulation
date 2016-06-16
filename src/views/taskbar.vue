@@ -50,7 +50,7 @@
     }
 </style>
 <template>
-    <div class="taskbar-section">
+    <div class="taskbar-section" @mousedown="mousedown($event);">
         <div class="app-list">
             <div
                     class="app-item"
@@ -92,6 +92,9 @@
             return {}
         },
         methods: {
+            mousedown:function (e) {
+                $event.emit('mousedown:taskbar',{x:e.clientX,y:e.clientY});
+            },
             click:function (app) {
                 if(app._focus){
                     app.hide();

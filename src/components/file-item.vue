@@ -91,7 +91,9 @@
             },
             mousedownOnFileItem:function (e) {
                 if ( $(e.target).is('.file-item') && e.button==0 ){
-                    $event.emit('mousedown:file',{x:e.clientX,y:e.clientY})
+                    $event.emit('mousedown:wallpaper',{x:e.clientX,y:e.clientY})
+                }else if(e.button==0){
+                    $event.emit('mousedown:file',{x:e.clientX,y:e.clientY});
                 }
             },
             contextmenuOnFileItem:function (e,file) {

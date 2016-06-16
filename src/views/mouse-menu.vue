@@ -29,7 +29,11 @@
                 }
             }
         },
-        methods: {},
+        methods: {
+            hide:function () {
+                this.menu.data = null;
+            }
+        },
         components: {
             menu:require('components/context-menu.vue')
         },
@@ -47,8 +51,8 @@
                 vm.menu.file = null;
                 vm.menu.position = {x:data.x,y:data.y};
             });
-            $event.on('mousedown:wallpaper',function (data) {
-                vm.menu.data = null;
+            $event.on('mousedown:wallpaper mousedown:file mousedown:taskbar',function (data) {
+                vm.hide();
             });
             var pasteOption = menuData.wallpaper.filter(function (a) {
                 return a.type=='paste'
