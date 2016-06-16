@@ -43,8 +43,39 @@
                 .Filter(saturate(1.2));
             }
         }
-        .app-body{
-
+        &.maximized{
+            .app-control .c.c2{
+                @margin:5px;
+                @diff:2px;
+                @w:8px;
+                @b:1px;
+                @top:0px;
+                @left:0px;
+                &:before{
+                    box-sizing:border-box;
+                    content:"";
+                    display:block;
+                    position:absolute;
+                    height:@w;
+                    width:@w;
+                    left:  ( @titleHeight - 2*@margin - @w ) /2 - @diff + @left;
+                    top: ( @titleHeight - 2*@margin - @w ) /2 + @diff + @top;
+                    border:@b solid #fff;
+                    border-top-width:2*@b;
+                }
+                &:after{
+                    box-sizing:border-box;
+                    content:"";
+                    display:block;
+                    position:absolute;
+                    height:@w;
+                    width:@w;
+                    left:  ( @titleHeight - 2*@margin - @w ) /2  + @diff + @left;
+                    top: ( @titleHeight - 2*@margin - @w ) /2  - @diff + @top;
+                    border:@b solid #fff;
+                    border-top-width:2*@b;
+                }
+            }
         }
         .app-control{
             @margin:5px;
@@ -194,7 +225,8 @@
             v-show="app._show"
             :class="{
                 focus:app._focus,
-                animating:app.animating
+                animating:app.animating,
+                maximized:app.maximized
                 }"
             :style="{
                 top:app.top+'px',
