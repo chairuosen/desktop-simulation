@@ -32,6 +32,11 @@ function App(o) {
     $.extend(_default,o);
     $.extend(this,_default);
 
+    this.sortKey = count++;
+    this.checkLayout();
+}
+
+App.prototype.checkLayout = function () {
     var maxWidth = window._w;
     var maxHeight = window._h - this.titleHeight;
 
@@ -48,7 +53,12 @@ function App(o) {
         this.top = window._h - this.titleHeight - this.height;
     }
 
-    this.sortKey = count++;
+    if(this.maximized){
+        this.top = 0;
+        this.left = 0;
+        this.height = window._h - this.titleHeight;
+        this.width = window._w;
+    }
 }
 
 App.prototype.set = function (key,value) {
@@ -92,9 +102,9 @@ App.prototype.blur = function () {
     this._focus = false;
 };
 
-App.prototype.maximize = function () {
+App.prototype.maximize = function (force) {
     var _this = this;
-    if(_this.maximized && _this.oldPosition){
+    if(!force && _this.maximized && _this.oldPosition){
         _this.animating = true;
         delay(function () {
             _this.maximized = false;
@@ -129,6 +139,6 @@ App.prototype.maximize = function () {
             },500);
         })
     }
-}
+};
 
-module.exports = App
+module.exports = App;

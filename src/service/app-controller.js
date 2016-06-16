@@ -58,6 +58,11 @@ $event.on('mousedown:wallpaper',function () {
         app._focus = false;
     })
 });
+$event.on('window:resize',function () {
+    _this.apps.forEach(function (app) {
+        app.checkLayout();
+    })
+});
 
 var vm = new Vue({
     data:function () {
