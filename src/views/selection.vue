@@ -1,18 +1,19 @@
 <style lang="less" rel="stylesheet/less">
+    @import "../global";
     .mouse-action-section{
         position:relative;
     }
     .selection-section{
         position:absolute;
-        border:1px solid rgba(50, 70, 100, 0.5);
-        background:rgba(142, 199, 228, 0.5);
+        border:1px solid fade(darken(@blue,10%),60);
+        background:fade(@blue,20)
     }
 </style>
 <template>
     <div class="mouse-action-section">
         <div
                 class="selection-section"
-                v-if="selection.startSelection"
+                v-show="selection.startSelection"
                 :style="getSelectionStyle();"
         ></div>
     </div>
