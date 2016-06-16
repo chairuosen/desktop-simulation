@@ -4,7 +4,7 @@
 <template>
     <div class="root">
         <wallpaper class="scope"></wallpaper>
-        <file class="scope" :apps.sync="apps" :files.sync="files"></file>
+        <files class="scope" :apps.sync="apps" :files.sync="files"></files>
         <selection class="scope"></selection>
         <application class="scope" :apps.sync="apps"></application>
         <taskbar class="scope" :apps.sync="apps"></taskbar>
@@ -30,7 +30,7 @@
         replace: false,
         components:{
             wallpaper:require('views/wallpaper.vue'),
-            file:require('views/file.vue'),
+            files:require('views/file.vue'),
             selection:require('views/selection.vue'),
             application:require('views/application.vue'),
             taskbar:require('views/taskbar.vue'),
