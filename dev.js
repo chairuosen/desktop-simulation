@@ -10,6 +10,15 @@ var port = process.argv[2] || 3000;
     config.entry.main.unshift(one);
 })
 config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
+config.plugins.push(function() {
+    this.plugin('done', function(stats) {
+        setTimeout(function () {
+            console.log('====================================')
+            console.log('Server listen: http://localhost:'+port);
+            console.log('====================================')
+        },0);
+    })
+})
 config.output.path = "/";
 config.debug = true;
 var server = new WebpackDevServer(webpack(config), {
@@ -25,8 +34,4 @@ var server = new WebpackDevServer(webpack(config), {
         colors: true
     }
 });
-server.listen(port, "localhost", function() {
-    console.log('====================================')
-    console.log('Server listen: http://localhost:'+port);
-    console.log('====================================')
-});
+server.listen(port, "localhost");
