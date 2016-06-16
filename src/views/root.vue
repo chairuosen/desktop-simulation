@@ -4,7 +4,7 @@
 <template>
     <div class="root">
         <wallpaper class="scope"></wallpaper>
-        <files class="scope" :apps.sync="apps" :files.sync="files"></files>
+        <files class="scope" :files.sync="files"></files>
         <selection class="scope"></selection>
         <application class="scope" :apps.sync="apps"></application>
         <taskbar class="scope" :apps.sync="apps"></taskbar>

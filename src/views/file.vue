@@ -59,7 +59,6 @@
 
     module.exports = {
         props:{
-            apps:Array,
             files:Array
         },
         data: function () {
