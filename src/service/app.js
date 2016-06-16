@@ -32,6 +32,22 @@ function App(o) {
     $.extend(_default,o);
     $.extend(this,_default);
 
+    var maxWidth = window._w;
+    var maxHeight = window._h - this.titleHeight;
+
+    if(this.width>maxWidth){
+        this.width = maxWidth;
+    }
+    if(this.height>maxHeight){
+        this.height=maxHeight;
+    }
+    if(this.left + this.width > window._w){
+        this.left = window._w - this.width;
+    }
+    if(this.height + this.titleHeight + this.top > window._h){
+        this.top = window._h - this.titleHeight - this.height;
+    }
+
     this.sortKey = count++;
 }
 
