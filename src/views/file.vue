@@ -71,8 +71,11 @@
         methods: {
             sortFile:function (files) {
                 files.forEach(function(file,index){
-                    file.x = Math.floor(index/maxRow);
-                    file.y = index%maxRow;
+                    if(!file.inPosition){
+                        file.x = Math.floor(index/maxRow);
+                        file.y = index%maxRow;
+                        file.inPosition = true;
+                    }
                 })
             },
             select:function (file) {
@@ -130,9 +133,14 @@
             file:require('components/file-item.vue')
         },
         ready: function () {
-            this.sortFile(this.files);
-
             var vm = this;
+
+            vm.sortFile(vm.files);
+
+            $event.on('file:reset',function () {
+                vm.sortFile(vm.files);
+            });
+
             $event.on('mousedown:wallpaper',function () {
                 vm.clearSelect();
             });

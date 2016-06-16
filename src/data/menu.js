@@ -1,3 +1,4 @@
+var appController = require('service/app-controller');
 module.exports = {
     file:[
         {
@@ -52,5 +53,15 @@ module.exports = {
                 $event.emit('paste:menu')
             }
         },
+        {
+            type:'divide'
+        },
+        {
+            text:"恢复图标",
+            type:"resetAllFile",
+            callback:function () {
+                appController.resetAllFile();
+            }
+        }
     ]
 }

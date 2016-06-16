@@ -1,7 +1,14 @@
 function File(o){
     $.extend(this,o);
-    this.x = 0;
-    this.y = 0;
+    if(!this.x){
+        this.x = 0;
+    }
+    if(!this.y){
+        this.y = 0;
+    }
+    if(!this.inPosition){
+        this.inPosition = false;
+    }
     this.selected = false;
 }
 File.prototype.open = function () {
