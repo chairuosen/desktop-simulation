@@ -12,8 +12,8 @@ function App(o) {
         _focus: false,
         titleHeight:30,
         type: null,
-        top: 100 + count * 5,
-        left: 100 + count * 5,
+        top: null,
+        left: null,
         height: 400,
         width: 600,
         data:null,
@@ -24,12 +24,12 @@ function App(o) {
         singleton:false,
         _close:false
     };
-    $.each(o,function (k,v) {
+    $.extend(_default,o);
+    $.each(_default,function (k,v) {
         if(typeof v == 'function'){
-            o[k] = v();
+            _default[k] = v();
         }
     });
-    $.extend(_default,o);
     $.extend(this,_default);
 
     this.sortKey = count++;
@@ -46,6 +46,15 @@ App.prototype.checkLayout = function () {
     if(this.height>maxHeight){
         this.height=maxHeight;
     }
+
+    if(this.left===null){
+        this.left = ( window._w - this.width ) / 2;
+    }
+    if(this.top===null){
+        this.top = ( window._h - this.height ) / 2;
+    }
+
+
     if(this.left + this.width > window._w){
         this.left = window._w - this.width;
     }

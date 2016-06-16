@@ -7,12 +7,6 @@ module.exports = [
             data: {
                 index: "http://baidu.com"
             },
-            top: function () {
-                return window._h * 0.1;
-            },
-            left: function () {
-                return window._w * 0.1;
-            },
             height: function () {
                 return window._h * 0.8;
             },
@@ -30,8 +24,6 @@ module.exports = [
                 data: {
                     index: "http://v2ex.com"
                 },
-                top: window._h * 0.1,
-                left: window._w * 0.1,
                 height: window._h * 0.8,
                 width: window._w * 0.8
             }
@@ -57,7 +49,6 @@ module.exports = [
             // resizable:false,
             width:400,
             height:400,
-            left:400
         }
     },
     {
