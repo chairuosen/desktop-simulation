@@ -106,7 +106,7 @@ App.prototype.maximize = function () {
             };
             _this.top = 0;
             _this.left = 0;
-            _this.height = window._h;
+            _this.height = window._h - _this.titleHeight;
             _this.width = window._w;
             delay(function () {
                 _this.animating = false;
