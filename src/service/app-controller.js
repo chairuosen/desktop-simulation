@@ -2,13 +2,13 @@ var util = require('service/util');
 var App = require('service/app');
 var File = require('service/file');
 var Vue = require('vue');
-var storage = require('service/storage');
+// var storage = require('service/storage');
 
 var sourceFile = require('data/files.js');
 
 var _this = {
     apps:[],
-    files:(storage.get('files')||sourceFile).map(function(a){
+    files:(sourceFile).map(function(a){
         return new File(a);
     }),
     openApp:function (app) {
@@ -64,19 +64,17 @@ $event.on('window:resize',function () {
     })
 });
 
-var vm = new Vue({
-    data:function () {
-        return {
-            files:_this.files
-        }
-    }
-});
-vm.$watch(function () {
-    return JSON.stringify(this.files);
-},function () {
-    storage.set('files',this.files);
-});
-
-window.test = function(){return _this.files};
+// var vm = new Vue({
+//     data:function () {
+//         return {
+//             files:_this.files
+//         }
+//     }
+// });
+// vm.$watch(function () {
+//     return JSON.stringify(this.files);
+// },function () {
+//     storage.set('files',this.files);
+// });
 
 module.exports = _this;
