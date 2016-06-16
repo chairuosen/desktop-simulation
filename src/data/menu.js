@@ -36,6 +36,7 @@ module.exports = {
             disabled:false,
             callback:function () {
 //                console.log(1);
+                $event.emit('refresh:menu')
             }
         },
         {

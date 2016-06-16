@@ -9,6 +9,7 @@
                 :file.sync="file"
                 :select="select"
                 :dragstart="dragstart"
+                v-show="allFileShow"
                 :style="{
                 height:option.cell.height+'px',
                 width:option.cell.width+'px',
@@ -65,7 +66,8 @@
             return {
                 option:option,
                 clipboard:[],
-                draggingItem:null
+                draggingItem:null,
+                allFileShow:true
             }
         },
         methods: {
@@ -136,6 +138,13 @@
             var vm = this;
 
             vm.sortFile(vm.files);
+
+            $event.on('refresh:menu',function () {
+                vm.allFileShow = false;
+                setTimeout(function () {
+                    vm.allFileShow = true;
+                },10);
+            });
 
             $event.on('file:reset',function () {
                 vm.sortFile(vm.files);
