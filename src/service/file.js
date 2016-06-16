@@ -12,8 +12,35 @@ function File(o){
     this.selected = false;
 }
 File.prototype.open = function () {
-    var appController = require('service/app-controller');
-    appController.openFile(this);
+    var file = this;
+    var options = {
+        title:file.name,
+        type:file.app,
+        icon:file.icon
+    };
+    if(file.options){
+        if(typeof file.options == 'function'){
+            file.options = file.options();
+        }
+        $.extend(options,file.options)
+    }
+
+    if(file._openedApp && file._openedApp._close){
+        file._openedApp = null;
+    }
+    var App = require('service/app.js');
+    var app = new App(options);
+
+    if(app.singleton && file._openedApp){
+        app = file._openedApp;
+    }
+
+    require('service/app-controller').openApp(app);
+
+    file.selected = false;
+    if(app.singleton){
+        file._openedApp = app;
+    }
 };
 File.prototype.select = function () {
     this.selected = !this.selected;

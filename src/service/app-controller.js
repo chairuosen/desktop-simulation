@@ -17,35 +17,6 @@ var _this = {
         }
         app.show();
     },
-    openFile:function (file) {
-        var options = {
-            title:file.name,
-            type:file.app,
-            icon:file.icon
-        };
-        if(file.options){
-            if(typeof file.options == 'function'){
-                file.options = file.options();
-            }
-            $.extend(options,file.options)
-        }
-
-        if(file._openedApp && file._openedApp._close){
-            file._openedApp = null;
-        }
-        var app = new App(options);
-
-        if(app.singleton && file._openedApp){
-            app = file._openedApp;
-        }
-
-        this.openApp(app);
-
-        file.selected = false;
-        if(app.singleton){
-            file._openedApp = app;
-        }
-    },
     resetAllFile:function () {
         this.files.length = 0;
         sourceFile.forEach(function (a,index) {
