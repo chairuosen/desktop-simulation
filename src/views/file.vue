@@ -22,6 +22,7 @@
 
 <script>
     var util = require('service/util');
+    var appController = require('service/app-controller');
 
     var option = {
         cell:{
@@ -232,6 +233,23 @@
             });
             $event.on('contextmenu:wallpaper',function () {
                 vm.clearSelect();
+            });
+            $event.on('openFileProp:menu',function (file) {
+                var File = require('service/file.js');
+                var propObj = {
+                    name: file.name +" 属性",
+                    app: "props",
+                    icon: file.icon,
+                    options: {
+                        data:file,
+                        width:400
+                    }
+                };
+                var PropFile = new File(propObj);
+                PropFile.open();
+            });
+            $event.on('resetFile:menu',function () {
+                appController.resetAllFile();
             })
         }
     }

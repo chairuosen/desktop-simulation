@@ -1,4 +1,3 @@
-var appController = require('service/app-controller');
 module.exports = {
     file:[
         {
@@ -28,6 +27,13 @@ module.exports = {
                 $event.emit('delete:menu')
             }
         },
+        {
+            text:"属性",
+            type:"prop",
+            callback:function (file) {
+                $event.emit('openFileProp:menu',file);
+            }
+        }
     ],
     wallpaper:[
         {
@@ -61,7 +67,7 @@ module.exports = {
             text:"恢复图标",
             type:"resetAllFile",
             callback:function () {
-                appController.resetAllFile();
+                $event.emit('resetFile:menu');
             }
         }
     ]

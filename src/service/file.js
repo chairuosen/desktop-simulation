@@ -9,6 +9,7 @@ function File(o){
     if(!this.inPosition){
         this.inPosition = false;
     }
+    this._sourceData = o;
     this.selected = false;
 }
 File.prototype.open = function () {
@@ -18,12 +19,7 @@ File.prototype.open = function () {
         type:file.app,
         icon:file.icon
     };
-    if(file.options){
-        if(typeof file.options == 'function'){
-            file.options = file.options();
-        }
-        $.extend(options,file.options)
-    }
+    $.extend(options,file.getOptions());
 
     if(file._openedApp && file._openedApp._close){
         file._openedApp = null;
@@ -41,6 +37,23 @@ File.prototype.open = function () {
     if(app.singleton){
         file._openedApp = app;
     }
+};
+File.prototype.getOptions = function () {
+    var options = {};
+    if(this.options){
+        options = this.options;
+        if(typeof this.options == 'function'){
+            options = this.options();
+        }
+        options = $.extend({},options);
+
+        for (var k in options){
+            if(typeof options[k] == "function" ){
+                options[k] = options[k]();
+            }
+        }
+    }
+    return options;
 };
 File.prototype.select = function () {
     this.selected = !this.selected;
